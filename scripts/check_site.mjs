@@ -75,15 +75,61 @@ function matchAll(html, re) {
   return out;
 }
 
+function extractBlocks(html, startTag, endTag) {
+  const blocks = [];
+  let from = 0;
+  for (;;) {
+    const start = html.indexOf(startTag, from);
+    if (start < 0) break;
+    const end = html.indexOf(endTag, start);
+    if (end < 0) break;
+    blocks.push({
+      text: html.slice(start, end + endTag.length),
+      line: lineAt(html, start),
+    });
+    from = end + endTag.length;
+  }
+  return blocks;
+}
+
 function extractBlock(html, startTag, endTag) {
-  const start = html.indexOf(startTag);
-  if (start < 0) return null;
-  const end = html.indexOf(endTag, start);
-  if (end < 0) return null;
-  return {
-    text: html.slice(start, end + endTag.length),
-    line: lineAt(html, start),
-  };
+  const blocks = extractBlocks(html, startTag, endTag);
+  return blocks.length === 0 ? null : blocks[0];
+}
+
+const CHROME = [
+  {
+    key: 'header',
+    start: '<header class="masthead">',
+    end: '</header>',
+    label: 'header',
+  },
+  {
+    key: 'closing',
+    start: '<section class="closing">',
+    end: '</section>',
+    label: 'closing block',
+  },
+  {
+    key: 'footer',
+    start: '<footer>',
+    end: '</footer>',
+    label: 'footer',
+  },
+];
+
+function checkChromeCount(page, html, violations) {
+  const ok = { header: true, closing: true, footer: true };
+  for (const block of CHROME) {
+    const found = extractBlocks(html, block.start, block.end);
+    if (found.length === 1) continue;
+    const line = found[1]?.line ?? 1;
+    violations.push(
+      `${page.file}:${line}  B-005 ${block.label} occurs ${found.length} times, expected exactly 1`,
+    );
+    ok[block.key] = false;
+  }
+  return ok;
 }
 
 function checkHead(page, html, violations) {
@@ -195,6 +241,11 @@ if (!fs.existsSync(sitemapAbs)) {
   }
 }
 
+const chromeOk = new Map();
+for (const page of loaded) {
+  chromeOk.set(page.file, checkChromeCount(page, page.html, violations));
+}
+
 if (loaded.length > 0) {
   const first = loaded[0];
   const firstHeader = extractBlock(first.html, '<header class="masthead">', '</header>');
@@ -205,41 +256,48 @@ if (loaded.length > 0) {
     : null;
 
   for (const page of loaded.slice(1)) {
+    const ok = chromeOk.get(page.file);
     const header = extractBlock(page.html, '<header class="masthead">', '</header>');
     const closing = extractBlock(page.html, '<section class="closing">', '</section>');
     const footer = extractBlock(page.html, '<footer>', '</footer>');
 
-    if (!firstHeader || !header) {
-      const line = header?.line ?? 1;
-      violations.push(
-        `${page.file}:${line}  B-004 header missing compared with ${first.file}`,
-      );
-    } else if (header.text.replaceAll(' aria-current="page"', '') !== firstHeaderNorm) {
-      violations.push(
-        `${page.file}:${header.line}  B-004 header differs from ${first.file}`,
-      );
+    if (ok.header) {
+      if (!firstHeader || !header) {
+        const line = header?.line ?? 1;
+        violations.push(
+          `${page.file}:${line}  B-004 header missing compared with ${first.file}`,
+        );
+      } else if (header.text.replaceAll(' aria-current="page"', '') !== firstHeaderNorm) {
+        violations.push(
+          `${page.file}:${header.line}  B-004 header differs from ${first.file}`,
+        );
+      }
     }
 
-    if (!firstClosing || !closing) {
-      const line = closing?.line ?? 1;
-      violations.push(
-        `${page.file}:${line}  B-004 closing block missing compared with ${first.file}`,
-      );
-    } else if (closing.text !== firstClosing.text) {
-      violations.push(
-        `${page.file}:${closing.line}  B-004 closing block differs from ${first.file}`,
-      );
+    if (ok.closing) {
+      if (!firstClosing || !closing) {
+        const line = closing?.line ?? 1;
+        violations.push(
+          `${page.file}:${line}  B-004 closing block missing compared with ${first.file}`,
+        );
+      } else if (closing.text !== firstClosing.text) {
+        violations.push(
+          `${page.file}:${closing.line}  B-004 closing block differs from ${first.file}`,
+        );
+      }
     }
 
-    if (!firstFooter || !footer) {
-      const line = footer?.line ?? 1;
-      violations.push(
-        `${page.file}:${line}  B-004 footer missing compared with ${first.file}`,
-      );
-    } else if (footer.text !== firstFooter.text) {
-      violations.push(
-        `${page.file}:${footer.line}  B-004 footer differs from ${first.file}`,
-      );
+    if (ok.footer) {
+      if (!firstFooter || !footer) {
+        const line = footer?.line ?? 1;
+        violations.push(
+          `${page.file}:${line}  B-004 footer missing compared with ${first.file}`,
+        );
+      } else if (footer.text !== firstFooter.text) {
+        violations.push(
+          `${page.file}:${footer.line}  B-004 footer differs from ${first.file}`,
+        );
+      }
     }
   }
 }

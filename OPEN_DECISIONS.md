@@ -71,6 +71,31 @@ or a cheap strong Chinese model — chosen on cost and voice latency.
 Neither is a reason not to build it. Both are reasons **the first artefact is a one-page scope with
 the opening script written out**, not a stack choice.
 
+## D-LWS-009 · One shared address, reversing the "two named addresses" decision
+
+**Decided by the owner, 2026-09-19. This reverses an earlier decision recorded the same day** — that
+`hello@` be declined and the site keep `lucian@` and `tumi@`. The site will instead publish a single
+**`enquiries@lumittechnology.com`**.
+
+His call, and recorded here so the file does not quietly contradict itself. Implemented in
+`LWS-P1A-005` phase 2: four `mailto:` links across `index.html` and `contact/index.html`, all of them
+outside the gated chrome, and the contact page's two keyed rows collapse into one.
+
+**Two things the owner must do, and they are sequencing, not preference:**
+
+- **The mailbox has to exist in cPanel before this ships.** A site that publishes an address with no
+  mailbox behind it bounces its own enquiries, and the contact page is the only way anyone can reach
+  this business. Create it, send a test message in from outside and confirm it arrives, and only then
+  upload.
+- **Decide who reads it.** A shared address with no named owner is how a first enquiry goes unanswered
+  for a week. Forwarding to both, or one person on the hook, either works — but it is a decision, not
+  a default.
+
+**What is being given up, stated once.** Naming two people was the reason `hello@` was declined nine
+hours earlier: on a two-person consultancy's contact page, a named person reads as a direct line and a
+role address reads as a queue. That is a judgement call about tone, not a correctness problem, and it
+is the owner's to make. Recorded, not re-argued.
+
 ---
 
 ## Closed since the last revision
@@ -86,7 +111,9 @@ See `docs/decision/decision_20260919_site_live.md`.
 - **A phone number.** No placeholder, no "coming soon". Silence reads deliberate on a consultancy
   contact page; "coming soon" reads unfinished.
 - **A booking link.** "Book a landscape session" stays a `mailto:` until D-LWS-008 ships.
-- **`hello@`** was declined in favour of the two named addresses. Settled.
+- **A shared mailbox.** `hello@` was declined on 2026-09-19 in favour of the two named addresses —
+  and then **reversed the same day**: see D-LWS-009 below. The parked item is `hello@` as a name, not
+  the idea of a shared address.
 
 ## Raised, and not this repository's to decide
 

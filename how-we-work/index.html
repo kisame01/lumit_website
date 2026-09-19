@@ -25,7 +25,8 @@
       <img src="/assets/lumit-mark.svg" alt="" width="34" height="25" decoding="async">
       <span class="brand-name">Lumit</span>
     </a>
-    <nav class="nav" aria-label="Primary">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <nav class="nav" id="primary-nav" aria-label="Primary">
         <a href="/">Home</a>
         <a href="/services/">Services</a>
         <a href="/how-we-work/" aria-current="page">How we work</a>
@@ -35,6 +36,19 @@
     </nav>
     <a class="btn" href="/contact/">Book a session <span class="arw">&#8594;</span></a>
   </div>
+  <script>
+    (function () {
+      var header = document.currentScript.parentNode;
+      var toggle = header.querySelector('.nav-toggle');
+      if (!toggle) return;
+      header.classList.add('is-enhanced');
+      toggle.addEventListener('click', function () {
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+        header.classList.toggle('is-open', !open);
+      });
+    })();
+  </script>
 </header>
 <main id="content">
 <section class="page is-on">

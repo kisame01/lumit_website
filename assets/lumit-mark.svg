@@ -1,5 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 181 134" width="181" height="134" aria-hidden="true" focusable="false" fill="none" role="img" aria-labelledby="lumit-title">
   <title id="lumit-title">Lumit Cloud Technology Consulting</title>
+  <style>
+    @media (prefers-color-scheme:dark){
+      #lumit-mark-l{fill:#EAF1FB}
+    }
+  </style>
   <defs>
   <linearGradient id="lumit-cloud-g" gradientUnits="userSpaceOnUse" x1="201.72" y1="132.87" x2="155.55" y2="6.27">
     <stop offset="0" stop-color="#003BE1"/>

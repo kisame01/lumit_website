@@ -79,6 +79,16 @@ ul{margin:0;padding:0;list-style:none}
   display:flex;align-items:center;gap:clamp(14px,3vw,36px);
   padding-block:14px;
 }
+.nav-toggle{
+  display:none;
+  font:inherit;font-size:14px;font-weight:600;line-height:1;
+  letter-spacing:0.04em;text-transform:uppercase;
+  background:none;border:1px solid var(--rule);border-radius:2px;
+  color:var(--ink);cursor:pointer;padding:8px 12px;
+  margin-left:auto;flex:0 0 auto;
+}
+.nav-toggle:hover{background:var(--rule-soft);border-color:var(--accent)}
+.nav-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:0 0 auto}
 .brand svg{width:34px;height:auto;display:block}
 .brand-name{
@@ -106,6 +116,21 @@ ul{margin:0;padding:0;list-style:none}
 .btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent);filter:none}
 .btn .arw{font-family:var(--mono);font-size:13px}
+@media (max-width:767.98px){
+  .masthead.is-enhanced .nav-toggle{display:inline-flex;align-items:center}
+  .masthead.is-enhanced .nav,
+  .masthead.is-enhanced .masthead-in > .btn{display:none}
+  .masthead.is-enhanced.is-open .masthead-in{flex-wrap:wrap}
+  .masthead.is-enhanced.is-open .nav{
+    display:flex;flex-direction:column;flex:1 0 100%;
+    margin-left:0;align-items:stretch;gap:0;
+  }
+  .masthead.is-enhanced.is-open .nav a{display:block}
+  .masthead.is-enhanced.is-open .masthead-in > .btn{
+    display:inline-flex;flex:1 0 100%;max-width:100%;
+    justify-content:center;box-sizing:border-box;
+  }
+}
 
 /* ---------- shared blocks ---------- */
 .page{display:none;padding-bottom:clamp(56px,9vw,110px)}
@@ -129,6 +154,7 @@ ul{margin:0;padding:0;list-style:none}
 
 /* annotated two-column: mono gutter + content */
 .annot{display:grid;grid-template-columns:150px minmax(0,1fr);gap:clamp(18px,3vw,44px)}
+.annot > *{min-width:0}
 .annot .gut{
   font-family:var(--mono);font-size:11.5px;line-height:1.7;
   color:var(--muted);letter-spacing:0.06em;
@@ -177,7 +203,7 @@ ul{margin:0;padding:0;list-style:none}
 }
 
 /* ---------- disposition matrix ---------- */
-.matrix-scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+.matrix-scroll{overflow-x:auto;max-width:100%;border:1px solid var(--rule);background:var(--surface)}
 table.matrix{border-collapse:collapse;width:100%;min-width:640px;font-size:14.5px}
 table.matrix caption{
   text-align:left;padding:14px 16px;border-bottom:1px solid var(--rule);

@@ -1,0 +1,24 @@
+# Line endings are LF everywhere, including in the working tree on Windows.
+#
+# This is not a style preference. Every byte count in this repository's records —
+# the §7 baselines in each contract, the 5,173 in the contact-page review, the
+# figures in docs/review/ — is a check that only works if the files on disk are
+# the files that were measured. Git's core.autocrlf on Windows rewrites LF to
+# CRLF the next time it touches the tree, which silently moves every one of them
+# and makes the byte-count discipline measure nothing.
+#
+# See docs/note/note_20260919_crlf_and_byte_count_discipline.md
+
+* text=auto eol=lf
+
+# Belt and braces for the files whose byte counts are asserted in records.
+*.html  text eol=lf
+*.css   text eol=lf
+*.mjs   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.xml   text eol=lf
+*.svg   text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+.htaccess text eol=lf

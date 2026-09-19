@@ -1,6 +1,6 @@
 # Rules
 
-Three, and they are all true of this repository. A rule that is not enforced or not honoured is worse
+Four, and they are all true of this repository. A rule that is not enforced or not honoured is worse
 than no rule.
 
 ## RULE 001 — The site stores nothing about a visitor
@@ -18,3 +18,12 @@ A gate that was made quiet by editing the thing it measures has measured nothing
 `package.json` carries no `dependencies` and no `devDependencies` key, and there is no lockfile. One
 `npm install` and this repository acquires a supply chain and a review obligation it does not need.
 Adding one is a decision, recorded in `docs/decision/`, not a commit.
+
+## RULE 004 — LF line endings, in the repository and in the working tree
+
+Enforced by `.gitattributes`. **Do not override it with `core.autocrlf` for this repository.**
+
+Byte counts are how scope is proved here — the planner has no shell on the machine and reads sizes
+and mtimes instead. A tool that silently rewrites every line ending turns every recorded byte count
+into a number that no longer describes any file. See
+`docs/note/note_20260919_crlf_and_byte_count_discipline.md`.

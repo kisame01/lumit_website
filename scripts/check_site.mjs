@@ -132,6 +132,42 @@ function checkChromeCount(page, html, violations) {
   return ok;
 }
 
+function tagNameFromStart(startTag) {
+  const match = /^<([A-Za-z][A-Za-z0-9]*)/.exec(startTag);
+  return match ? match[1].toLowerCase() : null;
+}
+
+const BALANCE_TAGS = [];
+{
+  const seen = new Set();
+  for (const name of [...CHROME.map((block) => tagNameFromStart(block.start)), 'script']) {
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+    BALANCE_TAGS.push(name);
+  }
+}
+
+function checkTagBalance(page, html, violations) {
+  for (const name of BALANCE_TAGS) {
+    const starts = matchAll(html, new RegExp(`<${name}(?=[\\s>/])`, 'gi'));
+    const ends = matchAll(html, new RegExp(`</${name}(?=[\\s>])`, 'gi'));
+    if (starts.length === ends.length) continue;
+    const unmatched =
+      starts.length > ends.length ? starts[ends.length] : ends[starts.length];
+    const line = unmatched?.line ?? 1;
+    violations.push(
+      `${page.file}:${line}  B-007 <${name}> has ${starts.length} start and ${ends.length} end tags`,
+    );
+  }
+}
+
+function chromeNorm(block, key) {
+  if (!block) return null;
+  return key === 'header'
+    ? block.text.replaceAll(' aria-current="page"', '')
+    : block.text;
+}
+
 function checkHead(page, html, violations) {
   const h1s = matchAll(html, /<h1\b/);
   if (h1s.length !== 1) {
@@ -246,56 +282,48 @@ for (const page of loaded) {
   chromeOk.set(page.file, checkChromeCount(page, page.html, violations));
 }
 
+for (const page of loaded) {
+  checkTagBalance(page, page.html, violations);
+}
+
 if (loaded.length > 0) {
   const first = loaded[0];
-  const firstHeader = extractBlock(first.html, '<header class="masthead">', '</header>');
-  const firstClosing = extractBlock(first.html, '<section class="closing">', '</section>');
-  const firstFooter = extractBlock(first.html, '<footer>', '</footer>');
-  const firstHeaderNorm = firstHeader
-    ? firstHeader.text.replaceAll(' aria-current="page"', '')
-    : null;
+  const rest = loaded.slice(1);
 
-  for (const page of loaded.slice(1)) {
-    const ok = chromeOk.get(page.file);
-    const header = extractBlock(page.html, '<header class="masthead">', '</header>');
-    const closing = extractBlock(page.html, '<section class="closing">', '</section>');
-    const footer = extractBlock(page.html, '<footer>', '</footer>');
+  for (const block of CHROME) {
+    if (!chromeOk.get(first.file)[block.key]) continue;
+    const firstBlock = extractBlock(first.html, block.start, block.end);
+    const firstNorm = chromeNorm(firstBlock, block.key);
+    const others = rest.map((page) => {
+      const extracted = extractBlock(page.html, block.start, block.end);
+      return {
+        page,
+        extracted,
+        norm: chromeNorm(extracted, block.key),
+        ok: chromeOk.get(page.file)[block.key],
+      };
+    });
 
-    if (ok.header) {
-      if (!firstHeader || !header) {
-        const line = header?.line ?? 1;
-        violations.push(
-          `${page.file}:${line}  B-004 header missing compared with ${first.file}`,
-        );
-      } else if (header.text.replaceAll(' aria-current="page"', '') !== firstHeaderNorm) {
-        violations.push(
-          `${page.file}:${header.line}  B-004 header differs from ${first.file}`,
-        );
-      }
+    const allOthersIdentical =
+      others.length > 0 && others.every((item) => item.norm === others[0].norm);
+    if (allOthersIdentical && others[0].norm !== firstNorm) {
+      const line = firstBlock?.line ?? 1;
+      violations.push(
+        `${first.file}:${line}  B-004 ${block.label} differs from the other ${others.length} pages`,
+      );
+      continue;
     }
 
-    if (ok.closing) {
-      if (!firstClosing || !closing) {
-        const line = closing?.line ?? 1;
+    for (const item of others) {
+      if (!item.ok) continue;
+      if (!firstBlock || !item.extracted) {
+        const line = item.extracted?.line ?? 1;
         violations.push(
-          `${page.file}:${line}  B-004 closing block missing compared with ${first.file}`,
+          `${item.page.file}:${line}  B-004 ${block.label} missing compared with ${first.file}`,
         );
-      } else if (closing.text !== firstClosing.text) {
+      } else if (item.norm !== firstNorm) {
         violations.push(
-          `${page.file}:${closing.line}  B-004 closing block differs from ${first.file}`,
-        );
-      }
-    }
-
-    if (ok.footer) {
-      if (!firstFooter || !footer) {
-        const line = footer?.line ?? 1;
-        violations.push(
-          `${page.file}:${line}  B-004 footer missing compared with ${first.file}`,
-        );
-      } else if (footer.text !== firstFooter.text) {
-        violations.push(
-          `${page.file}:${footer.line}  B-004 footer differs from ${first.file}`,
+          `${item.page.file}:${item.extracted.line}  B-004 ${block.label} differs from ${first.file}`,
         );
       }
     }

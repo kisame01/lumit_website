@@ -1,0 +1,8 @@
+{
+  "name": "lumit-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gates": "node scripts/check_site.mjs"
+  }
+}

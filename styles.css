@@ -117,6 +117,7 @@ ul{margin:0;padding:0;list-style:none}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent);filter:none}
 .btn .arw{font-family:var(--mono);font-size:13px}
 @media (max-width:767.98px){
+  .masthead-in{flex-wrap:wrap}
   .masthead.is-enhanced .nav-toggle{display:inline-flex;align-items:center}
   .masthead.is-enhanced .nav,
   .masthead.is-enhanced .masthead-in > .btn{display:none}

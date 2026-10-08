@@ -72,7 +72,7 @@ Certificate: AutoSSL for the apex, `www` and eight service subdomains, to 17 Dec
 | task | what | state |
 |---|---|---|
 | `LWS-P1A-006` | `.cpanel.yml` + B-008 | **merged and deployed 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. **B-008 cannot see files referenced from CSS** — review §5 |
-| `LWS-P1A-007` | the restyle + B-009 + B-010 | **contract written 2026-10-08, prototyped and measured before issue** — `docs/context/cursor/grok/4_7/high/lws_p1a_007_contract.md`, with exact `lws_p1a_007_styles.css`, `lws_p1a_007_icons.svg` and `lws_p1a_007_pages.diff` beside it |
+| `LWS-P1A-007` | the restyle + B-009 + B-010 | **implemented and reviewed, accepted 2026-10-08** — `docs/review/review_20261008_lws_p1a_007_restyle.md`; not yet merged or deployed. Contract — `docs/context/cursor/grok/4_7/high/lws_p1a_007_contract.md`, with exact `lws_p1a_007_styles.css`, `lws_p1a_007_icons.svg` and `lws_p1a_007_pages.diff` beside it |
 | `LWS-P1A-008` | self-hosted fonts | after the restyle |
 
 ## The deployment lesson, kept because it is why Phase 4 exists
@@ -100,8 +100,6 @@ verified from outside.
 
 | # | what | who |
 |---|---|---|
-| 1 | Hand `lws_p1a_007_contract.md` to Cursor Grok 4.7 High | owner |
-| 2 | Review LWS-P1A-007 — hashes, gate, ten mutations, 156-combination browser run, contrast | planner |
 | 3 | Commit, merge, push; Update from Remote → Deploy HEAD Commit; planner verifies from outside | owner, planner |
 | 4 | `LWS-P1A-008` — self-hosted fonts, and B-001/B-008 learn to read CSS `url()` | planner |
 | 5 | DMARC `rua=` edit | owner |
@@ -123,8 +121,8 @@ verified from outside.
 | B-006 | the responsive masthead toggle — LWS-P1A-003 | live |
 | B-007 | tag balance, and the reference-page collapse — LWS-P1A-004 | live |
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
-| B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | contract issued |
-| B-010 | no inline `style` attribute on any page — LWS-P1A-007 | contract issued |
+| B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | reviewed; live on merge |
+| B-010 | no inline `style` attribute on any page — LWS-P1A-007 | reviewed; live on merge |
 | B-011 | next free — CSS `url()` reach for B-001/B-008 is the likely taker, LWS-P1A-008 | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.

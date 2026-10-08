@@ -101,7 +101,7 @@ restyle (B-009, B-010) — both deployed by git and verified from outside.**
 
 | # | what | who |
 |---|---|---|
-| 1 | `LWS-P1A-008` — self-hosted fonts, and B-001/B-008 learn to read CSS `url()` | planner |
+| 1 | Hand `docs/context/cursor/grok/4_7/high/lws_p1a_008_contract.md` to Cursor — **LWS-P1A-008: self-hosted fonts, one-row nav 768–1023px (owner chose option A), B-001/B-008 read CSS `url()`, B-011 no third-party request.** Prototyped and measured before issue | owner |
 | 2 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
@@ -123,7 +123,8 @@ restyle (B-009, B-010) — both deployed by git and verified from outside.**
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
 | B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | live |
 | B-010 | no inline `style` attribute on any page — LWS-P1A-007 | live |
-| B-011 | next free — CSS `url()` reach for B-001/B-008 is the likely taker, LWS-P1A-008 | — |
+| B-011 | no third-party request from a page or a stylesheet — LWS-P1A-008 | contract issued |
+| B-012 | next free | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.
 

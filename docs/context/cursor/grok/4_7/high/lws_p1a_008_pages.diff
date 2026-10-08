@@ -1,0 +1,136 @@
+--- a/index.html
++++ b/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/services/index.html
++++ b/services/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/services/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/how-we-work/index.html
++++ b/how-we-work/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/how-we-work/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/engagements/index.html
++++ b/engagements/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/engagements/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/about/index.html
++++ b/about/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/about/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/contact/index.html
++++ b/contact/index.html
+@@ -13,10 +13,7 @@
+ <meta property="og:url" content="https://lumittechnology.com/contact/">
+ <meta name="theme-color" content="#041E49">
+ <link rel="icon" href="/assets/lumit-mark.svg?v=2" type="image/svg+xml">
+-<link rel="preconnect" href="https://fonts.googleapis.com">
+-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=3">
++<link rel="stylesheet" href="/styles.css?v=4">
+ </head>
+ <body>
+ <header class="masthead">
+--- a/.htaccess
++++ b/.htaccess
+@@ -20,11 +20,16 @@
+   Header always set X-Frame-Options "SAMEORIGIN"
+ </IfModule>
+ 
++<IfModule mod_mime.c>
++  AddType font/woff2 .woff2
++</IfModule>
++
+ <IfModule mod_expires.c>
+   ExpiresActive On
+   ExpiresByType text/css "access plus 7 days"
+   ExpiresByType image/svg+xml "access plus 30 days"
+   ExpiresByType text/html "access plus 0 seconds"
++  ExpiresByType font/woff2 "access plus 1 year"
+ </IfModule>
+ 
+ ErrorDocument 404 /index.html
+--- a/.cpanel.yml
++++ b/.cpanel.yml
+@@ -2,7 +2,7 @@
+ deployment:
+   tasks:
+     - export DEPLOYPATH=$HOME/public_html
+-    - /bin/mkdir -p $DEPLOYPATH/assets $DEPLOYPATH/about $DEPLOYPATH/contact $DEPLOYPATH/engagements $DEPLOYPATH/how-we-work $DEPLOYPATH/services
++    - /bin/mkdir -p $DEPLOYPATH/assets $DEPLOYPATH/assets/fonts $DEPLOYPATH/about $DEPLOYPATH/contact $DEPLOYPATH/engagements $DEPLOYPATH/how-we-work $DEPLOYPATH/services
+     - /bin/cp .htaccess $DEPLOYPATH/.htaccess
+     - /bin/cp index.html $DEPLOYPATH/index.html
+     - /bin/cp styles.css $DEPLOYPATH/styles.css
+@@ -10,6 +10,12 @@
+     - /bin/cp sitemap.xml $DEPLOYPATH/sitemap.xml
+     - /bin/cp assets/lumit-mark.svg $DEPLOYPATH/assets/lumit-mark.svg
+     - /bin/cp assets/icons.svg $DEPLOYPATH/assets/icons.svg
++    - /bin/cp assets/fonts/work-sans-latin-wght-normal.woff2 $DEPLOYPATH/assets/fonts/work-sans-latin-wght-normal.woff2
++    - /bin/cp assets/fonts/jetbrains-mono-latin-400-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-400-normal.woff2
++    - /bin/cp assets/fonts/jetbrains-mono-latin-500-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-500-normal.woff2
++    - /bin/cp assets/fonts/jetbrains-mono-latin-700-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-700-normal.woff2
++    - /bin/cp assets/fonts/OFL-work-sans.txt $DEPLOYPATH/assets/fonts/OFL-work-sans.txt
++    - /bin/cp assets/fonts/OFL-jetbrains-mono.txt $DEPLOYPATH/assets/fonts/OFL-jetbrains-mono.txt
+     - /bin/cp about/index.html $DEPLOYPATH/about/index.html
+     - /bin/cp contact/index.html $DEPLOYPATH/contact/index.html
+     - /bin/cp engagements/index.html $DEPLOYPATH/engagements/index.html
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -22,3 +22,6 @@
+ *.md    text eol=lf
+ *.txt   text eol=lf
+ .htaccess text eol=lf
++
++# Fonts are binary. Never normalise their bytes.
++*.woff2 binary

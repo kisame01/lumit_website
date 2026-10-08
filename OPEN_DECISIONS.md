@@ -9,38 +9,8 @@ Google, so a visitor's IP reaches Google on every page load. The contact page te
 "runs no tracking, sets no cookies requiring consent, and keeps no database of visitors" — narrowly
 true, and still a third-party request the site did not need. Self-hosting Work Sans and JetBrains
 Mono costs roughly 200 KB under `assets/` and one change to each page's head.
-**Recommendation: self-host.** Not blocking. Fold it into one of the cleanup contracts so the site is
+**Recommendation: self-host.** Not blocking. **Sequenced as `LWS-P1A-008`, after the restyle** (2026-10-08) — the restyle settles which weights are actually used, and with git deployment a separate task no longer costs a separate manual upload. Fold it into one of the cleanup contracts so the site is
 re-uploaded once rather than three times.
-
-## D-LWS-006 · The prose has not been edited, only written
-
-The six pages read as machine-written in places, em-dashes above all. Owner's call, 2026-09-19: clean
-it up **after** hosting, as its own contract, and look for a skill that reads the live pages rather
-than hand-editing blind. **RULE 002 applies to prose as much as to markup** — that contract reports
-what it found before it changes a word, and every edit moves a byte count that must be re-recorded.
-
-**Keep it separate from the layout fixes.** Layout is CSS and one asset; prose touches all six HTML
-files and runs straight through the B-004/B-005 chrome comparison.
-
-## D-LWS-007 · Should deployment to cPanel be automated?
-
-Raised by the owner 2026-09-19: can Claude or Cursor push to Elitehost directly? **Yes, and every
-route needs a credential stored somewhere.**
-
-| route | what it needs | who holds the secret |
-|---|---|---|
-| GitHub Actions + cPanel **API token** | token in GitHub repository secrets, workflow file in the repo | GitHub. **No agent ever sees it.** |
-| GitHub Actions + **FTP credentials** | FTP password in GitHub secrets | GitHub, but it is an account password, not a scoped token |
-| An agent calling cPanel UAPI directly | a token pasted into a session | **Not on the table.** No credential enters a chat, a file, a contract or this repository. |
-
-**If it is done, the cPanel API token via GitHub Actions is the route.** A token is scopable and
-revocable and is not the account password; the workflow file lives in the repository where it can be
-reviewed; the secret is set by the owner in GitHub's own UI.
-
-**Recommendation: not yet.** This site changed once in its life, on the day it launched. An automated
-deploy earns its keep at a change rate this site does not have, and buys it with a credential to
-protect. The cleanup contracts produce exactly one more upload. **Revisit after that upload, with
-evidence about how often this actually happens.**
 
 ## D-LWS-008 · The bot call operator — scope it before anyone picks a stack
 
@@ -100,6 +70,24 @@ is the owner's to make. Recorded, not re-argued.
 
 ## Closed since the last revision
 
+**D-LWS-007 — should deployment to cPanel be automated?** Closed **yes**, 2026-10-08, by the owner —
+**through cPanel Git™ Version Control, pulling the public repository over HTTPS, with no credential
+stored anywhere.** None of the three routes previously listed here is used; all three needed a
+secret. The earlier "not yet" asked for evidence about change rate; the evidence was three uploads in
+one day and one that half-landed. `.cpanel.yml` names every deployed file and B-008 proves it matches
+the site. See `docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_scope.md` §1.
+
+**D-LWS-006 — the prose had been written, not edited.** Closed by `LWS-P1A-005`, 2026-09-19:
+fifteen changes, reported before they were made. The one instance it left — the em-dash in the
+shared closing block — is adopted into the restyle on all six pages.
+See `docs/review/review_20260919_lws_p1a_005_prose_and_carried_defects.md` §7.
+
+**D-LWS-010 — the scope of the restyle.** Settled by the owner, 2026-10-08: **keep the real mark,
+keep dark mode, the live site's text wins** (title, description, `enquiries@`), and the six-page
+structure stays. The reference is `docs/reference/redesign_20261008.html`, a homepage-only mockup.
+See `docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_scope.md` §2–§3.
+
+
 **D-LWS-004 — does `www` resolve, and to what?** Closed **yes**, 2026-09-19. `www` is a CNAME to
 `lumittechnology.com.`, the AutoSSL certificate covers it, and
 `https://www.lumittechnology.com/about/` lands on `https://lumittechnology.com/about/` with the path
@@ -121,3 +109,7 @@ See `docs/decision/decision_20260919_site_live.md`.
 `apps/public-web` — the thing this repository now supersedes, and as of 2026-09-19 supersedes *in
 production*. Either that phase is closed as delivered elsewhere and `apps/public-web` is retired, or
 both sites exist and one is dead code. **Raise it in that repository, not here.**
+
+**Behaviour IDs are per repository.** `B-008` in `lumit_webapp` and `B-008` in this repository (the
+deployment manifest check, `LWS-P1A-006`) are unrelated. On 2026-10-08 the owner confirmed that git
+deployment for the website means **this** repository, `kisame01/lumit_website`, not `lumit_webapp`.

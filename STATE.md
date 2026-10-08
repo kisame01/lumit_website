@@ -1,160 +1,131 @@
 # State
 
-**As at 2026-09-19, after LWS-P1A-003 shipped, LWS-P1A-004 closed both gate residuals, and
-LWS-P1A-005 was approved. LWS-P1A-004 and LWS-P1A-005 are in the working tree, uncommitted, and
-LWS-P1A-005 has not yet been uploaded.**
+**As at 2026-10-08.** Re-measured from outside on that date, not carried forward from 2026-09-19.
 
 ## Where things are
 
-- **The site is live at `https://lumittechnology.com` and the mobile fix is deployed.** All ten
-  served files were re-fetched from outside after the upload and every byte count matches the
-  repository. `docs/decision/decision_20260919_site_live.md`.
-- **The masthead works on a phone.** Measured on the live site at 375×812: the homepage is
-  **375px wide** (was 662) and the masthead is **61px closed** (was 290). The toggle opens to six
-  links and the button at 351.7px and closes back to 61px.
-- `scripts/check_site.mjs` (**10,034**) passes: `6 pages | 68 internal links | 6 assets`, zero
-  violations across B-001 to B-007.
-- **LWS-P1A-005 is approved but not deployed.** The prose pass, the shared `enquiries@` address, the
-  no-JS wrap and versioned asset URLs are in the working tree. **The live site still serves the
-  pre-LWS-P1A-005 bytes.**
-- **In version control.** `main` at `b2aac7edf56c32f52f750ab201a1a314dc6dc613`, pushed to
-  `https://github.com/kisame01/lumit_website`. **LWS-P1A-004 and its Amendment A are in the working
-  tree and not yet committed.**
-- **Branch protection on `main` is not yet on.** When it goes on: **block force pushes and block
-  deletions only.** Not "require a pull request" — the owner is the sole committer.
-- `.gitignore` is **63** bytes; `/Claude outputs/` was added so a stray root folder is not committed.
+- **The site is live at `https://lumittechnology.com` and matches `main` byte for byte.** All ten
+  served files were re-fetched on 2026-10-08. LWS-P1A-005 — the prose pass, `enquiries@`, the no-JS
+  wrap and the versioned asset URLs — **landed on 2026-09-19 between 18:37 and 18:39 UTC**, all seven
+  files. That upload was never confirmed at the time; it is now.
+- **`main` is `203ab193de9e98fedb0164236cb5ed0428f8fc1c`**, unchanged since 2026-09-19, pushed to
+  `https://github.com/kisame01/lumit_website`. Read from the GitHub API, 2026-10-08.
+- `scripts/check_site.mjs` (**10,034**) passes on `main`: `6 pages | 68 internal links | 6 assets`,
+  zero violations across B-001 to B-007.
+- **Branch protection on `main` is still off** (GitHub API, 2026-10-08). From LWS-P1A-006 it protects
+  the deploy path, not just the history — see Phase 1 in `ROADMAP.md`.
+- **Roles changed on 2026-10-08:** planner/reviewer is **Claude Opus 5.5 High**, coder is **Cursor
+  running Grok 4.7 High**. Grok 4.7 exists and has a High setting — confirmed on Cursor's own model
+  page, because a past planner once invented a model version. `AGENTS.md` is updated.
 
-## Byte counts — the current baseline
-
-**On the live server** (LWS-P1A-003 state):
+## Byte counts — the current baseline, on disk and on the server
 
 ```
-.htaccess 796 · index.html 12,862 · styles.css 12,636 · robots.txt 73 · sitemap.xml 649
-assets/lumit-mark.svg 24,646 · about/ 6,953 · contact/ 5,784 · engagements/ 6,399
-how-we-work/ 7,046 · services/ 17,050
-```
-
-**In the working tree** (after LWS-P1A-005, awaiting upload):
-
-```
-index.html 12,860 · styles.css 12,667 · about/ 6,962 · contact/ 5,646
-engagements/ 6,408 · how-we-work/ 7,001 · services/ 17,040
-assets/lumit-mark.svg 24,646 (unchanged — only its URL gained ?v=2)
+.htaccess 796 · index.html 12,860 · styles.css 12,667 · robots.txt 73 · sitemap.xml 649
+assets/lumit-mark.svg 24,646 · about/ 6,962 · contact/ 5,646 · engagements/ 6,408
+how-we-work/ 7,001 · services/ 17,040
 scripts/check_site.mjs 10,034 · package.json 132 · .gitattributes 902 · .gitignore 63
 ```
 
-The six HTML deltas are **not** equal in LWS-P1A-005 and should not be — the prose pass differs per
-page. The Phase 4 portion **is** equal at +12 each, because `?v=2` is four characters and there are
-three references per page. RULE 004 held end to end.
+RULE 004 held end to end; no CRLF anywhere, on disk or on GitHub.
 
-## Mail — three of four done
+## Mail — three of four done, and the fourth has now been open for three weeks
 
-| record | state |
+| record | state on 2026-10-08 |
 |---|---|
 | SPF | `v=spf1 +a +mx +ip4:164.160.91.16 include:spf.zamailgate.com ~all` — correct |
 | DKIM | `default._domainkey`, 2048-bit RSA — correct |
 | MX | `0 mail.lumittechnology.com.` — correct |
-| **DMARC** | **`v=DMARC1; p=none;` — no `rua=`. Still open.** |
+| **DMARC** | **`v=DMARC1; p=none;` — still no `rua=`.** Queried through `dns.google` and `cloudflare-dns.com`, both at full TTL 14400. |
 
-Re-queried 2026-09-19 through **two independent resolvers**, `dns.google` and `cloudflare-dns.com`,
-both returning full TTL 14400. **This is not resolver cache — the record has not been edited.** It
-needs an **edit**, not a second record; two DMARC records on one name is treated as no policy at all.
-Target value: `v=DMARC1; p=none; rua=mailto:lucian@lumittechnology.com; fo=1`.
+**Edit, do not add.** Two DMARC records on one name is treated as no policy at all. Target:
+`v=DMARC1; p=none; rua=mailto:lucian@lumittechnology.com; fo=1`. **Keep `rua=` on `lucian@`, not
+`enquiries@`** — aggregate reports are daily machine XML and would bury real enquiries.
 
-**Two real mail round trips completed, 2026-09-19.** `lucian@` in and out; and
-**`enquiries@lumittechnology.com` tested both directions against an outside Google account** before
-LWS-P1A-005 was allowed to upload. The published address works.
+**The 2026-10-19 follow-up — move to `p=quarantine` — cannot be done safely on time**, because it
+depends on reports this record is not yet collecting. Re-date it to four weeks after the `rua=` edit.
 
-**Keep `rua=` pointed at `lucian@`, not `enquiries@`.** DMARC aggregate reports are machine-generated
-XML sent daily by every receiving provider; they belong in a mailbox someone monitors deliberately,
-not in the public enquiries inbox where they would bury real messages.
+Mail round trips completed 2026-09-19 for `lucian@` and for **`enquiries@lumittechnology.com`, tested
+both directions against an outside Google account** before it was published.
 
 Certificate: AutoSSL for the apex, `www` and eight service subdomains, to 17 Dec 2026, auto-renewing.
 
-## Done this session
+## Decided on 2026-10-08
 
-- **LWS-P1A-003 approved, merged and deployed.** B-006, the responsive masthead toggle, plus the
-  homepage scroller and the dark-mode mark. Reviewer reproduced all four contract mutations, ran four
-  of its own, and re-measured the full 84-row grid in a second browser.
-  `docs/review/review_20260919_lws_p1a_003_b006.md`.
-- **LWS-P1A-004 approved, plus Amendment A.** B-007: an unterminated tag is now caught even when it
-  is identical on all six pages, and a chrome defect on the reference page reports once instead of
-  five times. **Both residuals from the LWS-P1A-002 review are closed.**
-  `docs/review/review_20260919_lws_p1a_004_b007.md`.
-- The three mobile layout defects and the tall masthead are all fixed and verified on the live site.
-- **LWS-P1A-005 approved.** Prose pass (15 changes, reported before editing), the shared
-  `enquiries@` address, the no-JS wrap, and versioned asset URLs. Reviewer reproduced all five
-  mutations, diffed every changed line against the baseline, and re-measured the full grid with a
-  different no-JS method than the implementer used.
-  `docs/review/review_20260919_lws_p1a_005_prose_and_carried_defects.md`.
-- **The no-JS masthead at 375px went from 421px wide with 46px of overflow to 375px with none.**
-- **`enquiries@lumittechnology.com` created and tested**, in and out, against an outside Google
-  account — before the files that publish it were allowed to upload.
-- Deployment lesson recorded below.
+`docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_scope.md`
 
-## The deployment, and what went wrong with it
+- **D-LWS-007 closed — deploy by cPanel Git™ Version Control.** Pull deployment from the public repo
+  over HTTPS. **No credential stored anywhere.** `.cpanel.yml` names every file it copies; B-008 makes
+  the gate prove that list matches the site.
+- **D-LWS-010 — the restyle.** Reference: `docs/reference/redesign_20261008.html` (24,983 bytes), a
+  homepage-only mockup. **Keep the real mark, keep dark mode, the live text wins**, the six-page
+  structure stays, styles live in `styles.css`, icons are inline SVG with no library.
 
-The first upload **half-landed**. The five page folders got their new `index.html`; the root
-`index.html`, root `styles.css` and `assets/lumit-mark.svg` did not. Caught from outside by comparing
-`Last-Modified` — the three failures still carried the morning's 08:36 and 08:42 stamps while the five
-successes read 17:29. For about ten minutes the live site served **new HTML with the old stylesheet**,
-which put an unstyled "Menu" button on desktop on five pages. Re-uploading the three files fixed it.
+## In flight
 
-**Check `Last-Modified`, not just that the page loads.** A half-landed upload looks fine on the pages
-that landed.
+| task | what | state |
+|---|---|---|
+| `LWS-P1A-006` | `.cpanel.yml` + B-008 | **implemented and reviewed, accepted 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. Not yet merged or deployed. **B-008 cannot see files referenced from CSS** — review §5 |
+| `LWS-P1A-007` | the restyle | **not yet written** — the new planner writes it, from the decision record §2–§3 |
+| `LWS-P1A-008` | self-hosted fonts | after the restyle |
+
+## The deployment lesson, kept because it is why Phase 4 exists
+
+On 2026-09-19 the first LWS-P1A-003 upload **half-landed**: five page folders updated, the root
+`index.html`, `styles.css` and the mark did not. Caught from outside by `Last-Modified`. For about ten
+minutes the site served new HTML against an old stylesheet, which put an unstyled "Menu" button on
+desktop. **A half-landed upload looks fine on the pages that landed. Check `Last-Modified`.** Git
+deployment removes the folder-by-folder step that caused it; B-008 removes the version of the same
+failure that git deployment would otherwise introduce.
 
 ## Open — measured, not reported
 
-| # | what | size | fix lives in |
-|---|---|---|---|
-| 1 | **Google Fonts on every page** — preconnect plus a stylesheet, against a contact page that promises no third-party anything. **Now the most important open item.** D-LWS-005 | ~200 KB to self-host | six HTML heads, `assets/`, `styles.css` |
-| 2 | **The most-seen em-dash on the site is still there.** In the shared closing block, on all six pages: "…existing environment **—** we can turn the challenge into a practical roadmap". The prose pass left the chrome alone because the contract told it to. Fixable — change it identically six times and B-004 verifies it | — | six HTML files, gated chrome |
-| 3 | **A commented-out `<script>` or chrome tag fires B-007.** Known, disclosed, accepted as the right trade | — | nothing; delete commented markup rather than leaving it |
-
-Items 1 and 2 of the previous revision — the 46px no-JS overflow and the unversioned long-cached
-assets — were **closed by LWS-P1A-005**.
+| # | what | fix lives in |
+|---|---|---|
+| 1 | **Google Fonts on every page**, against a contact page that promises no third-party requests. D-LWS-005 | `LWS-P1A-008` |
+| 2 | **The closing-block em-dash on all six pages.** Adopted into the restyle by owner decision | `LWS-P1A-007` |
+| 3 | **A commented-out `<script>` or chrome tag fires B-007.** Known, accepted | nothing — delete commented markup |
+| 4 | **DMARC has no `rua=`** | owner, Zone Editor |
+| 5 | **Branch protection off** | owner, GitHub settings |
 
 ## Next
 
 | # | what | who |
 |---|---|---|
-| ~~0~~ | ~~Create and test the `enquiries@` mailbox~~ — **done 2026-09-19**, round trip confirmed both directions against an outside Google account. The upload is unblocked | owner |
-| 1 | Commit LWS-P1A-004 + Amendment A + LWS-P1A-005 on a branch, merge `--no-ff` | owner |
-| 2 | **Upload seven files** — the six `index.html` and `styles.css`. The mark is unchanged; `?v=2` on its URL is what makes browsers refetch it. **Check `Last-Modified` on every file afterwards** | owner |
-| 3 | Edit `_dmarc` to add `rua=`, then confirm by DNS query | owner |
-| 4 | Branch protection on `main` — force pushes and deletions only | owner |
-| 5 | `LWS-P1A-006` — self-host the webfonts (D-LWS-005), optionally the closing-block em-dash | planner → coder |
+| 1 | Hand `lws_p1a_006_contract.md` to Cursor Grok 4.7 High | owner |
+| 2 | Review the LWS-P1A-006 report independently — stage, gate, mutations, **re-run the deploy emulation** | planner |
+| 3 | Commit and merge LWS-P1A-006 | owner |
+| 4 | **Check cPanel has Files → Git™ Version Control.** Some hosts switch it off | owner |
+| 5 | Clone, Update from Remote, Deploy HEAD Commit — see the planner handover §6 | owner |
+| 6 | Verify all eleven files from outside; then rewrite `README.md`'s deploy section | planner |
+| 7 | Write `LWS-P1A-007`, the restyle | planner |
+| 8 | DMARC `rua=` edit, and branch protection | owner |
 
 ## Parked, deliberately
 
-- **Phone number and booking link.** No "coming soon" placeholder. Superseded only if the bot call
-  operator ships — and that is **a separate repository and project**, not this one. D-LWS-008.
-- **A shared address.** `hello@` was declined, then **reversed the same day** in favour of
-  `enquiries@lumittechnology.com`. D-LWS-009.
-- **D-LWS-007, automated deploy to cPanel.** Recommendation stands: not yet. Revisit after the
-  LWS-P1A-005 upload, with evidence about how often this actually happens.
+- **Phone number and booking link.** No "coming soon" placeholder. D-LWS-008 — a separate project.
+- **D-LWS-009 — `enquiries@`** is live and tested. Who reads it day to day is the owner's call.
 
-## Behaviour IDs — the register, because one was double-booked
+## Behaviour IDs — the register
 
 | ID | what | state |
 |---|---|---|
-| B-001 | internal links resolve | live |
+| B-001 | internal links and assets resolve | live |
 | B-002 | one `<h1>`, `<title>`, meta description, canonical per page | live |
-| B-003 | assets resolve | live |
-| B-004 | shared chrome byte-identical across pages | live, and now collapses a reference-page defect to one violation |
+| B-003 | sitemap agrees with the pages on disk | live |
+| B-004 | shared chrome byte-identical across pages; a reference-page defect reports once | live |
 | B-005 | each chrome block exactly once per page | live |
-| B-006 | **the responsive masthead toggle** — consumed by LWS-P1A-003 | live |
-| B-007 | **the two gate residuals** — consumed by LWS-P1A-004 | live |
-| B-008 | next free | — |
+| B-006 | the responsive masthead toggle — LWS-P1A-003 | live |
+| B-007 | tag balance, and the reference-page collapse — LWS-P1A-004 | live |
+| **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **reviewed; live on merge** — blind to CSS `url()`, review §5 |
+| B-009 | next free — the restyle's icon-sprite check is the likely taker | — |
 
-LWS-P1A-005 introduced no new behaviour; it was covered by B-001 to B-007 throughout.
-
-**An earlier revision of this file called the gate residuals `B-006`. That was wrong** — `B-006` is
-the masthead, assigned in the LWS-P1A-003 contract. The residuals are `B-007`.
+**Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.
 
 ## Dated follow-ups
 
 | by | what |
 |---|---|
-| **2026-10-19** | DMARC at `p=none` — once outbound mail is passing, move to `p=quarantine`. |
-| later | then `p=reject`. Going straight to reject is how a new domain silently bins its own invoices. |
+| **4 weeks after the `rua=` edit** | DMARC `p=none` → `p=quarantine`, if the reports show outbound mail passing. Re-dated from 2026-10-19, which the missing `rua=` made impossible. |
+| later | then `p=reject` |
+| **17 Dec 2026** | AutoSSL expiry — auto-renewing; confirm it did in the first week of December |

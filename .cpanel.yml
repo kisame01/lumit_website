@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html
-    - /bin/mkdir -p $DEPLOYPATH/assets $DEPLOYPATH/about $DEPLOYPATH/contact $DEPLOYPATH/engagements $DEPLOYPATH/how-we-work $DEPLOYPATH/services
+    - /bin/mkdir -p $DEPLOYPATH/assets $DEPLOYPATH/assets/fonts $DEPLOYPATH/about $DEPLOYPATH/contact $DEPLOYPATH/engagements $DEPLOYPATH/how-we-work $DEPLOYPATH/services
     - /bin/cp .htaccess $DEPLOYPATH/.htaccess
     - /bin/cp index.html $DEPLOYPATH/index.html
     - /bin/cp styles.css $DEPLOYPATH/styles.css
@@ -10,6 +10,12 @@ deployment:
     - /bin/cp sitemap.xml $DEPLOYPATH/sitemap.xml
     - /bin/cp assets/lumit-mark.svg $DEPLOYPATH/assets/lumit-mark.svg
     - /bin/cp assets/icons.svg $DEPLOYPATH/assets/icons.svg
+    - /bin/cp assets/fonts/work-sans-latin-wght-normal.woff2 $DEPLOYPATH/assets/fonts/work-sans-latin-wght-normal.woff2
+    - /bin/cp assets/fonts/jetbrains-mono-latin-400-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-400-normal.woff2
+    - /bin/cp assets/fonts/jetbrains-mono-latin-500-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-500-normal.woff2
+    - /bin/cp assets/fonts/jetbrains-mono-latin-700-normal.woff2 $DEPLOYPATH/assets/fonts/jetbrains-mono-latin-700-normal.woff2
+    - /bin/cp assets/fonts/OFL-work-sans.txt $DEPLOYPATH/assets/fonts/OFL-work-sans.txt
+    - /bin/cp assets/fonts/OFL-jetbrains-mono.txt $DEPLOYPATH/assets/fonts/OFL-jetbrains-mono.txt
     - /bin/cp about/index.html $DEPLOYPATH/about/index.html
     - /bin/cp contact/index.html $DEPLOYPATH/contact/index.html
     - /bin/cp engagements/index.html $DEPLOYPATH/engagements/index.html

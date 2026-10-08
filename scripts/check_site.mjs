@@ -222,8 +222,14 @@ function checkHead(page, html, violations) {
   }
 }
 
-// The three root files no page links to. Everything else is discovered.
-const DEPLOY_UNLINKED = ['.htaccess', 'robots.txt', 'sitemap.xml'];
+// Files no page or stylesheet references, which must still be served.
+const DEPLOY_UNLINKED = [
+  '.htaccess',
+  'robots.txt',
+  'sitemap.xml',
+  'assets/fonts/OFL-work-sans.txt',
+  'assets/fonts/OFL-jetbrains-mono.txt',
+];
 
 function isDeployPathSafe(src) {
   if (src.startsWith('/') || /^[A-Za-z]:/.test(src)) return false;
@@ -238,7 +244,101 @@ function rememberDeployDir(created, dir) {
   }
 }
 
-function checkDeploy(loaded, violations) {
+function offSiteHost(target) {
+  let body = null;
+  if (target.startsWith('https://')) body = target.slice(8);
+  else if (target.startsWith('http://')) body = target.slice(7);
+  else if (target.startsWith('//')) body = target.slice(2);
+  if (body === null) return null;
+  return body.split('/')[0].split('?')[0].split('#')[0].split(':')[0].toLowerCase();
+}
+
+function isOffSite(target) {
+  const host = offSiteHost(target);
+  return host !== null && host !== 'lumittechnology.com';
+}
+
+function cssUrlTarget(raw) {
+  let target = raw.trim();
+  if (
+    target.length >= 2 &&
+    ((target.startsWith('"') && target.endsWith('"')) ||
+      (target.startsWith("'") && target.endsWith("'")))
+  ) {
+    target = target.slice(1, -1).trim();
+  }
+  return target;
+}
+
+function readStylesheets(loaded, violations) {
+  const files = new Set();
+  const thirdParty = [];
+  let assets = 0;
+  const seen = new Set();
+  const urlRe = /url\(\s*([^)]*?)\s*\)/g;
+  for (const page of loaded) {
+    for (const ref of page.links) {
+      const abs = resolveOnDisk(ref.target);
+      if (!rel(abs).endsWith('.css')) continue;
+      if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) continue;
+      if (seen.has(abs)) continue;
+      seen.add(abs);
+      const cssFile = rel(abs);
+      const css = fs.readFileSync(abs, 'utf8');
+      urlRe.lastIndex = 0;
+      let match;
+      while ((match = urlRe.exec(css))) {
+        const target = cssUrlTarget(match[1]);
+        if (target.startsWith('data:')) continue;
+        assets += 1;
+        const line = lineAt(css, match.index);
+        if (isOffSite(target)) {
+          thirdParty.push({ file: cssFile, line, target });
+          continue;
+        }
+        if (!(target.startsWith('/') && !target.startsWith('//'))) {
+          violations.push(
+            `${cssFile}:${line}  B-001 url() is not root-absolute: ${target}`,
+          );
+          continue;
+        }
+        const fileAbs = resolveOnDisk(target);
+        if (!fs.existsSync(fileAbs) || !fs.statSync(fileAbs).isFile()) {
+          violations.push(`${cssFile}:${line}  B-001 ${target} does not resolve`);
+          continue;
+        }
+        files.add(rel(fileAbs));
+      }
+    }
+  }
+  return { files, assets, thirdParty };
+}
+
+function checkThirdParty(loaded, cssThirdParty, violations) {
+  const tagRe = /<(link|script|img|iframe|source|audio|video|embed)\b[^>]*>/gi;
+  const attrRe = /\b(?:href|src)="([^"]*)"/g;
+  for (const page of loaded) {
+    tagRe.lastIndex = 0;
+    let match;
+    while ((match = tagRe.exec(page.html))) {
+      attrRe.lastIndex = 0;
+      let attr;
+      while ((attr = attrRe.exec(match[0]))) {
+        if (!isOffSite(attr[1])) continue;
+        violations.push(
+          `${page.file}:${lineAt(page.html, match.index)}  B-011 third-party request: ${attr[1]}`,
+        );
+      }
+    }
+  }
+  for (const item of cssThirdParty) {
+    violations.push(
+      `${item.file}:${item.line}  B-011 third-party request: ${item.target}`,
+    );
+  }
+}
+
+function checkDeploy(loaded, violations, cssFiles) {
   const manifestFile = '.cpanel.yml';
   const manifestAbs = path.join(root, manifestFile);
   if (!fs.existsSync(manifestAbs) || !fs.statSync(manifestAbs).isFile()) {
@@ -339,6 +439,7 @@ function checkDeploy(loaded, violations) {
       if (fs.existsSync(abs) && fs.statSync(abs).isFile()) site.add(rel(abs));
     }
   }
+  for (const file of cssFiles) site.add(file);
   for (const name of DEPLOY_UNLINKED) site.add(name);
 
   const seen = new Set();
@@ -541,9 +642,12 @@ if (loaded.length > 0) {
   }
 }
 
-checkDeploy(loaded, violations);
+const css = readStylesheets(loaded, violations);
+assetCount += css.assets;
+checkDeploy(loaded, violations, css.files);
 checkIcons(loaded, violations);
 checkInlineStyles(loaded, violations);
+checkThirdParty(loaded, css.thirdParty, violations);
 
 process.stdout.write(
   `site check: ${loaded.length} pages | ${linkCount} internal links | ${assetCount} assets\n`,

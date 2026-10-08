@@ -22,3 +22,6 @@
 *.md    text eol=lf
 *.txt   text eol=lf
 .htaccess text eol=lf
+
+# Fonts are binary. Never normalise their bytes.
+*.woff2 binary

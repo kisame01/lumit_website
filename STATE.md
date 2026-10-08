@@ -13,12 +13,16 @@
 - Before that: LWS-P1A-005 — the prose pass, `enquiries@`, the no-JS
   wrap and the versioned asset URLs — **landed on 2026-09-19 between 18:37 and 18:39 UTC**, all seven
   files. That upload was never confirmed at the time; it is now.
-- **`main` is `c8c399cded2ccc10a1d26f736aaf941e43ef419c`** (Merge LWS-P1A-007, the restyle), on
-  `https://github.com/kisame01/lumit_website`. **Deployed 2026-10-08 11:08:45 UTC by cPanel Git**:
-  all eleven served files byte-identical to `main` (SHA-256), every page asks for `styles.css?v=3`,
-  `assets/icons.svg` served as `image/svg+xml`, records 404, `.htaccess` 403.
-- `scripts/check_site.mjs` (**16,729**) passes on `main`: **`6 pages | 132 internal links | 6 assets`**
-  — 68 links plus 64 icon `<use href>`, by design — zero violations across B-001 to B-010.
+- **`main` is `bb238be9b4d3c7af04a59f8e49e8ed997478956b`** (Merge LWS-P1A-008), on
+  `https://github.com/kisame01/lumit_website`. **Deployed 2026-10-08 13:17:32 UTC by cPanel Git**:
+  all seventeen served files byte-identical to `main` (SHA-256); every page asks for
+  `styles.css?v=4`; the four fonts served as `font/woff2`, `max-age=31536000`; licences reachable;
+  records 404, `.htaccess` 403.
+- **A live page load contacts no host but `lumittechnology.com`** — measured from the browser's
+  resource timing, 2026-10-08. Google Fonts is gone. The contact page's promise is now literally true.
+- **Nav on one row from 768px**, masthead 65.2px at 768px, live.
+- `scripts/check_site.mjs` (**19,980**) passes on `main`: **`6 pages | 132 internal links | 10 assets`**
+  — zero violations across B-001 to B-011.
 - **Branch protection on `main` is on since 2026-10-08** — classic rule, nothing ticked: blocks force
   pushes and deletion only; no pull request required. GitHub API: `protected: true`, no required
   status checks. It protects the deploy path — cPanel's Update from Remote is fast-forward only.
@@ -90,21 +94,19 @@ failure that git deployment would otherwise introduce.
 
 | # | what | fix lives in |
 |---|---|---|
-| 1 | **Google Fonts on every page**, against a contact page that promises no third-party requests. D-LWS-005 | `LWS-P1A-008` |
 | 3 | **A commented-out `<script>` or chrome tag fires B-007.** Known, accepted | nothing — delete commented markup |
 | 4 | **DMARC has no `rua=`** | owner, Zone Editor |
 
 ## Next
 
-Done on 2026-10-08: LWS-P1A-006 (git deployment, B-008), branch protection, and **LWS-P1A-007, the
-restyle (B-009, B-010) — both deployed by git and verified from outside.**
+Done on 2026-10-08: LWS-P1A-006 (git deployment, B-008), branch protection, **LWS-P1A-007 (the
+restyle, B-009, B-010)** and **LWS-P1A-008 (self-hosted fonts, one-row tablet nav, CSS-aware gate,
+B-011)** — all deployed by git and verified from outside.
 
 | # | what | who |
 |---|---|---|
-| 1 | Commit, merge and deploy LWS-P1A-008 — **reviewed and accepted 2026-10-08**, `docs/review/review_20261008_lws_p1a_008_fonts_nav_css_gate.md` | owner |
-| 2 | Verify from outside: `styles.css?v=4`, fonts as `font/woff2` with a one-year cache, **no request to any other host** | planner |
-| 3 | Small follow-up: make B-010 and B-011 quote- and case-insensitive (review §3) | planner |
-| 4 | DMARC `rua=` edit | owner |
+| 1 | Small follow-up: make B-010 and B-011 quote- and case-insensitive (review of LWS-P1A-008 §3) | planner |
+| 2 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
 
@@ -125,7 +127,7 @@ restyle (B-009, B-010) — both deployed by git and verified from outside.**
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
 | B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | live |
 | B-010 | no inline `style` attribute on any page — LWS-P1A-007 | live |
-| B-011 | no third-party request from a page or a stylesheet — LWS-P1A-008 | reviewed; live on merge |
+| B-011 | no third-party request from a page or a stylesheet — LWS-P1A-008 | live |
 | B-012 | next free | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.

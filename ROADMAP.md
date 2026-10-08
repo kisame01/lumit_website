@@ -34,7 +34,7 @@ A six-page marketing site. The roadmap is short on purpose.
 - [x] B-006 responsive masthead, the homepage scroller and the dark-mode mark — `LWS-P1A-003`
 - [x] B-007, the two gate residuals from the `LWS-P1A-002` review — `LWS-P1A-004`
 - [x] Prose pass, shared `enquiries@` address, no-JS wrap, versioned asset URLs — `LWS-P1A-005`
-- [ ] Self-host the webfonts (D-LWS-005) — moved to Phase 4 as `LWS-P1A-008`
+- [x] Self-host the webfonts (D-LWS-005) — done as `LWS-P1A-008`, 2026-10-08
 - [ ] DMARC to `p=quarantine`, then `p=reject` — **blocked on the `rua=` edit above**; moving policy
       without reports is guessing
 
@@ -49,7 +49,7 @@ Decided in `docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_sc
 - [x] `README.md` deploy section rewritten — **only after** that first deploy is verified
 - [x] `LWS-P1A-007`, deployed 2026-10-08 — the restyle, from `docs/reference/redesign_20261008.html`: brand palette, icons,
       cards, closing band, in `styles.css`, dark mode kept, real mark kept, live text kept
-- [ ] `LWS-P1A-008` — self-hosted fonts; no visitor's IP reaches Google
+- [x] `LWS-P1A-008`, deployed 2026-10-08 — self-hosted fonts; no visitor's IP reaches Google
 
 **Exit:** a deploy is two clicks with no stored secret, the site carries the new design in light and
 dark, and no page makes a third-party request.

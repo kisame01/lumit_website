@@ -47,7 +47,7 @@ Decided in `docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_sc
 - [x] First deploy through cPanel Git — byte-identical files, every `Last-Modified` moves, verified
       from outside. **The pipeline is proven on a change that cannot break anything.**
 - [x] `README.md` deploy section rewritten — **only after** that first deploy is verified
-- [ ] `LWS-P1A-007` — the restyle, from `docs/reference/redesign_20261008.html`: brand palette, icons,
+- [x] `LWS-P1A-007`, deployed 2026-10-08 — the restyle, from `docs/reference/redesign_20261008.html`: brand palette, icons,
       cards, closing band, in `styles.css`, dark mode kept, real mark kept, live text kept
 - [ ] `LWS-P1A-008` — self-hosted fonts; no visitor's IP reaches Google
 

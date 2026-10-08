@@ -13,10 +13,12 @@
 - Before that: LWS-P1A-005 — the prose pass, `enquiries@`, the no-JS
   wrap and the versioned asset URLs — **landed on 2026-09-19 between 18:37 and 18:39 UTC**, all seven
   files. That upload was never confirmed at the time; it is now.
-- **`main` is `d00c4ddefc80759044a86f2704101be1bc2b5135`** (Merge LWS-P1A-006), on
-  `https://github.com/kisame01/lumit_website`. Deployed and live.
-- `scripts/check_site.mjs` (**14,799**) passes on `main`: `6 pages | 68 internal links | 6 assets`,
-  zero violations across B-001 to B-008.
+- **`main` is `c8c399cded2ccc10a1d26f736aaf941e43ef419c`** (Merge LWS-P1A-007, the restyle), on
+  `https://github.com/kisame01/lumit_website`. **Deployed 2026-10-08 11:08:45 UTC by cPanel Git**:
+  all eleven served files byte-identical to `main` (SHA-256), every page asks for `styles.css?v=3`,
+  `assets/icons.svg` served as `image/svg+xml`, records 404, `.htaccess` 403.
+- `scripts/check_site.mjs` (**16,729**) passes on `main`: **`6 pages | 132 internal links | 6 assets`**
+  — 68 links plus 64 icon `<use href>`, by design — zero violations across B-001 to B-010.
 - **Branch protection on `main` is on since 2026-10-08** — classic rule, nothing ticked: blocks force
   pushes and deletion only; no pull request required. GitHub API: `protected: true`, no required
   status checks. It protects the deploy path — cPanel's Update from Remote is fast-forward only.
@@ -72,7 +74,7 @@ Certificate: AutoSSL for the apex, `www` and eight service subdomains, to 17 Dec
 | task | what | state |
 |---|---|---|
 | `LWS-P1A-006` | `.cpanel.yml` + B-008 | **merged and deployed 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. **B-008 cannot see files referenced from CSS** — review §5 |
-| `LWS-P1A-007` | the restyle + B-009 + B-010 | **implemented and reviewed, accepted 2026-10-08** — `docs/review/review_20261008_lws_p1a_007_restyle.md`; not yet merged or deployed. Contract — `docs/context/cursor/grok/4_7/high/lws_p1a_007_contract.md`, with exact `lws_p1a_007_styles.css`, `lws_p1a_007_icons.svg` and `lws_p1a_007_pages.diff` beside it |
+| `LWS-P1A-007` | the restyle + B-009 + B-010 | **merged as `c8c399c` and deployed 2026-10-08 11:08:45 UTC, verified from outside** — `docs/review/review_20261008_lws_p1a_007_restyle.md`. Contract — `docs/context/cursor/grok/4_7/high/lws_p1a_007_contract.md`, with exact `lws_p1a_007_styles.css`, `lws_p1a_007_icons.svg` and `lws_p1a_007_pages.diff` beside it |
 | `LWS-P1A-008` | self-hosted fonts | after the restyle |
 
 ## The deployment lesson, kept because it is why Phase 4 exists
@@ -89,20 +91,18 @@ failure that git deployment would otherwise introduce.
 | # | what | fix lives in |
 |---|---|---|
 | 1 | **Google Fonts on every page**, against a contact page that promises no third-party requests. D-LWS-005 | `LWS-P1A-008` |
-| 2 | **The closing-block em-dash on all six pages.** Adopted into the restyle by owner decision | `LWS-P1A-007` |
 | 3 | **A commented-out `<script>` or chrome tag fires B-007.** Known, accepted | nothing — delete commented markup |
 | 4 | **DMARC has no `rua=`** | owner, Zone Editor |
 
 ## Next
 
-Steps 1–6 of the 2026-10-08 list are done: LWS-P1A-006 reviewed, merged, and **deployed by git**,
-verified from outside.
+Done on 2026-10-08: LWS-P1A-006 (git deployment, B-008), branch protection, and **LWS-P1A-007, the
+restyle (B-009, B-010) — both deployed by git and verified from outside.**
 
 | # | what | who |
 |---|---|---|
-| 3 | Commit, merge, push; Update from Remote → Deploy HEAD Commit; planner verifies from outside | owner, planner |
-| 4 | `LWS-P1A-008` — self-hosted fonts, and B-001/B-008 learn to read CSS `url()` | planner |
-| 5 | DMARC `rua=` edit | owner |
+| 1 | `LWS-P1A-008` — self-hosted fonts, and B-001/B-008 learn to read CSS `url()` | planner |
+| 2 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
 
@@ -121,8 +121,8 @@ verified from outside.
 | B-006 | the responsive masthead toggle — LWS-P1A-003 | live |
 | B-007 | tag balance, and the reference-page collapse — LWS-P1A-004 | live |
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
-| B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | reviewed; live on merge |
-| B-010 | no inline `style` attribute on any page — LWS-P1A-007 | reviewed; live on merge |
+| B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | live |
+| B-010 | no inline `style` attribute on any page — LWS-P1A-007 | live |
 | B-011 | next free — CSS `url()` reach for B-001/B-008 is the likely taker, LWS-P1A-008 | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.

@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="/styles.css?v=2">
+<link rel="stylesheet" href="/styles.css?v=3">
 </head>
 <body>
 <header class="masthead">
@@ -25,7 +25,7 @@
       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
       <span class="brand-name">Lumit</span>
     </a>
-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
     <nav class="nav" id="primary-nav" aria-label="Primary">
         <a href="/">Home</a>
         <a href="/services/">Services</a>
@@ -63,19 +63,22 @@
     <section class="section">
       <div class="contact-grid">
         <div class="cbox">
+          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-mail"/></svg></span>
           <h3>Talk to us directly</h3>
           <div class="cline"><span class="k">Enquiries</span><span class="v"><a href="mailto:enquiries@lumittechnology.com">enquiries@lumittechnology.com</a></span></div>
           <div class="cline"><span class="k">Based in</span><span class="v">Johannesburg, South Africa</span></div>
           <div class="cline"><span class="k">Serving</span><span class="v">South Africa, remote and on-site</span></div>
         </div>
         <div class="cbox">
+          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-compass"/></svg></span>
           <h3>Book a landscape session</h3>
-          <p class="body" style="margin-top:10px;font-size:15px">Send us a line with your industry and roughly what your environment looks like. We reply with two or three times that suit, and a short note on what we would want to see first.</p>
-          <p style="margin-top:20px"><a class="btn" href="mailto:enquiries@lumittechnology.com?subject=Landscape%20session">Email to arrange a session <span class="arw">→</span></a></p>
+          <p class="body">Send us a line with your industry and roughly what your environment looks like. We reply with two or three times that suit, and a short note on what we would want to see first.</p>
+          <p class="cbox-act"><a class="btn" href="mailto:enquiries@lumittechnology.com?subject=Landscape%20session">Email to arrange a session <span class="arw">→</span></a></p>
         </div>
         <div class="cbox">
+          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-list"/></svg></span>
           <h3>What happens next</h3>
-          <ul class="deliv" style="margin-top:10px">
+          <ul class="deliv">
             <li>We talk for thirty minutes about the estate as it is</li>
             <li>You get a written view of what we would assess first</li>
             <li>If it is worth doing, we scope a fixed assessment</li>
@@ -83,9 +86,10 @@
           </ul>
         </div>
       </div>
-      <div class="note" style="margin-top:34px">
-        <strong>Nothing on this page is stored by us</strong>
-        <p>This site runs no tracking, sets no cookies requiring consent, and keeps no database of visitors. Enquiries reach us by email, and nowhere else.</p>
+      <div class="note">
+        <svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-shield"/></svg>
+        <div><strong>Nothing on this page is stored by us</strong>
+        <p>This site runs no tracking, sets no cookies requiring consent, and keeps no database of visitors. Enquiries reach us by email, and nowhere else.</p></div>
       </div>
     </section>
   </div>
@@ -97,8 +101,8 @@
   <div class="wrap">
     <p class="eyebrow">Let's build what's next</p>
     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
+    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
   </div>
 </section>
 
@@ -106,7 +110,7 @@
   <div class="wrap">
     <span class="mono">Lumit Cloud Technology Consulting</span>
     <span class="mono">lumittechnology.com</span>
-    <span class="sp mono">Johannesburg · South Africa</span>
+    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
   </div>
 </footer>
 </body>

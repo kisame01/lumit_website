@@ -365,6 +365,74 @@ function checkDeploy(loaded, violations) {
   }
 }
 
+function symbolIds(text) {
+  const ids = new Set();
+  const re = /<symbol\b[^>]*\bid="([^"]*)"/g;
+  let match;
+  while ((match = re.exec(text))) ids.add(match[1]);
+  return ids;
+}
+
+function checkIcons(loaded, violations) {
+  const cache = new Map();
+  function idsAt(abs) {
+    if (cache.has(abs)) return cache.get(abs);
+    const ids = symbolIds(fs.readFileSync(abs, 'utf8'));
+    cache.set(abs, ids);
+    return ids;
+  }
+
+  const useRe = /<use\b[^>]*?\bhref="([^"]*)"/g;
+  for (const page of loaded) {
+    useRe.lastIndex = 0;
+    let match;
+    while ((match = useRe.exec(page.html))) {
+      const href = match[1];
+      const line = lineAt(page.html, match.index);
+      const hash = href.indexOf('#');
+      const fragment = hash < 0 ? '' : href.slice(hash + 1);
+      if (fragment === '') {
+        violations.push(
+          `${page.file}:${line}  B-009 <use> has no #fragment: ${href}`,
+        );
+        continue;
+      }
+      const filePart = href.slice(0, hash);
+      let ids;
+      let label;
+      if (filePart === '') {
+        ids = symbolIds(page.html);
+        label = page.file;
+      } else if (isInternal(filePart)) {
+        const abs = resolveOnDisk(filePart);
+        if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) continue;
+        ids = idsAt(abs);
+        label = filePart.split('?')[0];
+      } else {
+        continue;
+      }
+      if (!ids.has(fragment)) {
+        violations.push(
+          `${page.file}:${line}  B-009 #${fragment} is not a <symbol> in ${label}`,
+        );
+      }
+    }
+  }
+}
+
+function checkInlineStyles(loaded, violations) {
+  const re = / style="/g;
+  for (const page of loaded) {
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(page.html))) {
+      violations.push(
+        `${page.file}:${lineAt(page.html, match.index)}  B-010 inline style attribute`,
+      );
+    }
+  }
+}
+
 const pages = findPages();
 const loaded = pages.map((page) => {
   const html = fs.readFileSync(page.abs, 'utf8');
@@ -474,6 +542,8 @@ if (loaded.length > 0) {
 }
 
 checkDeploy(loaded, violations);
+checkIcons(loaded, violations);
+checkInlineStyles(loaded, violations);
 
 process.stdout.write(
   `site check: ${loaded.length} pages | ${linkCount} internal links | ${assetCount} assets\n`,

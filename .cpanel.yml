@@ -9,6 +9,7 @@ deployment:
     - /bin/cp robots.txt $DEPLOYPATH/robots.txt
     - /bin/cp sitemap.xml $DEPLOYPATH/sitemap.xml
     - /bin/cp assets/lumit-mark.svg $DEPLOYPATH/assets/lumit-mark.svg
+    - /bin/cp assets/icons.svg $DEPLOYPATH/assets/icons.svg
     - /bin/cp about/index.html $DEPLOYPATH/about/index.html
     - /bin/cp contact/index.html $DEPLOYPATH/contact/index.html
     - /bin/cp engagements/index.html $DEPLOYPATH/engagements/index.html

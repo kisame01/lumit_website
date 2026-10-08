@@ -101,8 +101,10 @@ restyle (B-009, B-010) — both deployed by git and verified from outside.**
 
 | # | what | who |
 |---|---|---|
-| 1 | Hand `docs/context/cursor/grok/4_7/high/lws_p1a_008_contract.md` to Cursor — **LWS-P1A-008: self-hosted fonts, one-row nav 768–1023px (owner chose option A), B-001/B-008 read CSS `url()`, B-011 no third-party request.** Prototyped and measured before issue | owner |
-| 2 | DMARC `rua=` edit | owner |
+| 1 | Commit, merge and deploy LWS-P1A-008 — **reviewed and accepted 2026-10-08**, `docs/review/review_20261008_lws_p1a_008_fonts_nav_css_gate.md` | owner |
+| 2 | Verify from outside: `styles.css?v=4`, fonts as `font/woff2` with a one-year cache, **no request to any other host** | planner |
+| 3 | Small follow-up: make B-010 and B-011 quote- and case-insensitive (review §3) | planner |
+| 4 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
 
@@ -123,7 +125,7 @@ restyle (B-009, B-010) — both deployed by git and verified from outside.**
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
 | B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | live |
 | B-010 | no inline `style` attribute on any page — LWS-P1A-007 | live |
-| B-011 | no third-party request from a page or a stylesheet — LWS-P1A-008 | contract issued |
+| B-011 | no third-party request from a page or a stylesheet — LWS-P1A-008 | reviewed; live on merge |
 | B-012 | next free | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.

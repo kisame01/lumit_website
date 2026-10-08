@@ -4,14 +4,19 @@
 
 ## Where things are
 
-- **The site is live at `https://lumittechnology.com` and matches `main` byte for byte.** All ten
-  served files were re-fetched on 2026-10-08. LWS-P1A-005 — the prose pass, `enquiries@`, the no-JS
+- **The site deploys by cPanel Git™ Version Control since 2026-10-08.** First deploy of
+  `d00c4dd` (Merge LWS-P1A-006) at **10:09:08 UTC**: all ten served files re-fetched from outside,
+  **byte-identical to `main` (SHA-256)**, every `Last-Modified` moved to 10:09:08 UTC; `.cpanel.yml`,
+  `STATE.md`, `docs/`, `scripts/` all 404; `.htaccess` and `.git/` 403; `http://www…/about/` →
+  `https://lumittechnology.com/about/`; missing URL 404. cPanel warns that shell access is off —
+  harmless, deploy works without it.
+- Before that: LWS-P1A-005 — the prose pass, `enquiries@`, the no-JS
   wrap and the versioned asset URLs — **landed on 2026-09-19 between 18:37 and 18:39 UTC**, all seven
   files. That upload was never confirmed at the time; it is now.
-- **`main` is `203ab193de9e98fedb0164236cb5ed0428f8fc1c`**, unchanged since 2026-09-19, pushed to
-  `https://github.com/kisame01/lumit_website`. Read from the GitHub API, 2026-10-08.
-- `scripts/check_site.mjs` (**10,034**) passes on `main`: `6 pages | 68 internal links | 6 assets`,
-  zero violations across B-001 to B-007.
+- **`main` is `d00c4ddefc80759044a86f2704101be1bc2b5135`** (Merge LWS-P1A-006), on
+  `https://github.com/kisame01/lumit_website`. Deployed and live.
+- `scripts/check_site.mjs` (**14,799**) passes on `main`: `6 pages | 68 internal links | 6 assets`,
+  zero violations across B-001 to B-008.
 - **Branch protection on `main` is still off** (GitHub API, 2026-10-08). From LWS-P1A-006 it protects
   the deploy path, not just the history — see Phase 1 in `ROADMAP.md`.
 - **Roles changed on 2026-10-08:** planner/reviewer is **Claude Opus 5.5 High**, coder is **Cursor
@@ -65,7 +70,7 @@ Certificate: AutoSSL for the apex, `www` and eight service subdomains, to 17 Dec
 
 | task | what | state |
 |---|---|---|
-| `LWS-P1A-006` | `.cpanel.yml` + B-008 | **implemented and reviewed, accepted 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. Not yet merged or deployed. **B-008 cannot see files referenced from CSS** — review §5 |
+| `LWS-P1A-006` | `.cpanel.yml` + B-008 | **merged and deployed 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. **B-008 cannot see files referenced from CSS** — review §5 |
 | `LWS-P1A-007` | the restyle | **not yet written** — the new planner writes it, from the decision record §2–§3 |
 | `LWS-P1A-008` | self-hosted fonts | after the restyle |
 
@@ -90,16 +95,14 @@ failure that git deployment would otherwise introduce.
 
 ## Next
 
+Steps 1–6 of the 2026-10-08 list are done: LWS-P1A-006 reviewed, merged, and **deployed by git**,
+verified from outside.
+
 | # | what | who |
 |---|---|---|
-| 1 | Hand `lws_p1a_006_contract.md` to Cursor Grok 4.7 High | owner |
-| 2 | Review the LWS-P1A-006 report independently — stage, gate, mutations, **re-run the deploy emulation** | planner |
-| 3 | Commit and merge LWS-P1A-006 | owner |
-| 4 | **Check cPanel has Files → Git™ Version Control.** Some hosts switch it off | owner |
-| 5 | Clone, Update from Remote, Deploy HEAD Commit — see the planner handover §6 | owner |
-| 6 | Verify all eleven files from outside; then rewrite `README.md`'s deploy section | planner |
-| 7 | Write `LWS-P1A-007`, the restyle | planner |
-| 8 | DMARC `rua=` edit, and branch protection | owner |
+| 1 | **Branch protection on `main`** — block force pushes and deletions only. Now part of the deploy path | owner |
+| 2 | Write `LWS-P1A-007`, the restyle — and close the CSS `url()` gap in B-001/B-008 if it adds any `url()` | planner |
+| 3 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
 
@@ -117,7 +120,7 @@ failure that git deployment would otherwise introduce.
 | B-005 | each chrome block exactly once per page | live |
 | B-006 | the responsive masthead toggle — LWS-P1A-003 | live |
 | B-007 | tag balance, and the reference-page collapse — LWS-P1A-004 | live |
-| **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **reviewed; live on merge** — blind to CSS `url()`, review §5 |
+| **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
 | B-009 | next free — the restyle's icon-sprite check is the likely taker | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.

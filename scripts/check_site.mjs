@@ -222,6 +222,149 @@ function checkHead(page, html, violations) {
   }
 }
 
+// The three root files no page links to. Everything else is discovered.
+const DEPLOY_UNLINKED = ['.htaccess', 'robots.txt', 'sitemap.xml'];
+
+function isDeployPathSafe(src) {
+  if (src.startsWith('/') || /^[A-Za-z]:/.test(src)) return false;
+  if (/[*?\[\]{}]/.test(src)) return false;
+  return src.split('/').every((part) => part !== '' && part !== '..');
+}
+
+function rememberDeployDir(created, dir) {
+  const parts = dir.split('/');
+  for (let n = 1; n <= parts.length; n++) {
+    created.add(parts.slice(0, n).join('/'));
+  }
+}
+
+function checkDeploy(loaded, violations) {
+  const manifestFile = '.cpanel.yml';
+  const manifestAbs = path.join(root, manifestFile);
+  if (!fs.existsSync(manifestAbs) || !fs.statSync(manifestAbs).isFile()) {
+    violations.push(`${manifestFile}:1  B-008 .cpanel.yml not found`);
+    return;
+  }
+
+  const text = fs.readFileSync(manifestAbs, 'utf8');
+  const lines = text.split('\n');
+  let tasksStarted = false;
+  const tasks = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (!tasksStarted) {
+      if (/^\s*tasks:\s*$/.test(lines[i])) tasksStarted = true;
+      continue;
+    }
+    const match = /^\s*-\s+(.+)$/.exec(lines[i]);
+    if (match) tasks.push({ task: match[1], line: i + 1 });
+  }
+
+  const expectedExport = 'export DEPLOYPATH=$HOME/public_html';
+  if (tasks.length === 0 || tasks[0].task !== expectedExport) {
+    const line = tasks[0] ? tasks[0].line : 1;
+    violations.push(
+      `${manifestFile}:${line}  B-008 first task must be ${expectedExport}`,
+    );
+  }
+
+  const createdDirs = new Set();
+  const deployed = [];
+  for (let i = 1; i < tasks.length; i++) {
+    const task = tasks[i].task;
+    const line = tasks[i].line;
+
+    if (task.startsWith('/bin/mkdir -p ')) {
+      const args = task
+        .slice('/bin/mkdir -p '.length)
+        .split(/\s+/)
+        .filter((arg) => arg !== '');
+      const dirs = [];
+      let allowed = args.length > 0;
+      for (const arg of args) {
+        if (!arg.startsWith('$DEPLOYPATH/')) {
+          allowed = false;
+          break;
+        }
+        const dir = arg.slice('$DEPLOYPATH/'.length);
+        if (!isDeployPathSafe(dir)) {
+          allowed = false;
+          break;
+        }
+        dirs.push(dir);
+      }
+      if (!allowed) {
+        violations.push(`${manifestFile}:${line}  B-008 task not allowed: ${task}`);
+        continue;
+      }
+      for (const dir of dirs) rememberDeployDir(createdDirs, dir);
+      continue;
+    }
+
+    if (task.startsWith('/bin/cp ')) {
+      const rest = task.slice('/bin/cp '.length);
+      const marker = ' $DEPLOYPATH/';
+      const idx = rest.indexOf(marker);
+      const later = idx === -1 ? -1 : rest.indexOf(marker, idx + marker.length);
+      const src = idx > 0 ? rest.slice(0, idx) : '';
+      const dest = idx > 0 ? rest.slice(idx + marker.length) : '';
+      // A disallowed task is not a deployment: its source is not counted.
+      const shapeOk = idx > 0 && later === -1 && src === dest && isDeployPathSafe(src);
+      if (!shapeOk) {
+        violations.push(`${manifestFile}:${line}  B-008 task not allowed: ${task}`);
+        continue;
+      }
+      const slash = src.lastIndexOf('/');
+      const destDir = slash === -1 ? '' : src.slice(0, slash);
+      if (destDir !== '' && !createdDirs.has(destDir)) {
+        violations.push(
+          `${manifestFile}:${line}  B-008 destination directory for ${src} does not exist yet`,
+        );
+      }
+      const abs = path.join(root, src);
+      if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) {
+        violations.push(`${manifestFile}:${line}  B-008 ${src} does not exist as a file`);
+      }
+      deployed.push({ file: src, line });
+      continue;
+    }
+
+    violations.push(`${manifestFile}:${line}  B-008 task not allowed: ${task}`);
+  }
+
+  const site = new Set();
+  for (const page of loaded) site.add(page.file);
+  for (const page of loaded) {
+    for (const ref of [...page.links, ...page.assets]) {
+      const abs = resolveOnDisk(ref.target);
+      if (fs.existsSync(abs) && fs.statSync(abs).isFile()) site.add(rel(abs));
+    }
+  }
+  for (const name of DEPLOY_UNLINKED) site.add(name);
+
+  const seen = new Set();
+  for (const item of deployed) {
+    if (seen.has(item.file)) {
+      violations.push(
+        `${manifestFile}:${item.line}  B-008 ${item.file} is deployed more than once`,
+      );
+    } else {
+      seen.add(item.file);
+    }
+    if (!site.has(item.file)) {
+      violations.push(
+        `${manifestFile}:${item.line}  B-008 ${item.file} is deployed but is not part of the site`,
+      );
+    }
+  }
+  for (const file of site) {
+    if (!seen.has(file)) {
+      violations.push(
+        `${manifestFile}:1  B-008 ${file} is part of the site but is not deployed`,
+      );
+    }
+  }
+}
+
 const pages = findPages();
 const loaded = pages.map((page) => {
   const html = fs.readFileSync(page.abs, 'utf8');
@@ -329,6 +472,8 @@ if (loaded.length > 0) {
     }
   }
 }
+
+checkDeploy(loaded, violations);
 
 process.stdout.write(
   `site check: ${loaded.length} pages | ${linkCount} internal links | ${assetCount} assets\n`,

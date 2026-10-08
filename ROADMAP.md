@@ -8,7 +8,7 @@ A six-page marketing site. The roadmap is short on purpose.
 - [x] `contact/index.html` defect found and fixed
 - [x] Repository records
 - [x] `git init`, first commit, push to `kisame01/lumit_website`
-- [ ] Branch protection on `main` — free, because the repository is public. **Block force pushes and
+- [x] Branch protection on `main`, on 2026-10-08 — free, because the repository is public. **Block force pushes and
       block deletions only.** "Require a pull request" locks out the only committer. **From
       `LWS-P1A-006` this is part of the deploy path:** cPanel's Update from Remote is fast-forward
       only, so a force-pushed `main` stops deployment.
@@ -42,11 +42,11 @@ A six-page marketing site. The roadmap is short on purpose.
 
 Decided in `docs/decision/decision_20261008_cpanel_git_deployment_and_restyle_scope.md`.
 
-- [ ] `LWS-P1A-006` — `.cpanel.yml` and **B-008**: the gate proves the deployment manifest matches the
+- [x] `LWS-P1A-006` — `.cpanel.yml` and **B-008**: the gate proves the deployment manifest matches the
       site, nothing missing and nothing extra
-- [ ] First deploy through cPanel Git — byte-identical files, every `Last-Modified` moves, verified
+- [x] First deploy through cPanel Git — byte-identical files, every `Last-Modified` moves, verified
       from outside. **The pipeline is proven on a change that cannot break anything.**
-- [ ] `README.md` deploy section rewritten — **only after** that first deploy is verified
+- [x] `README.md` deploy section rewritten — **only after** that first deploy is verified
 - [ ] `LWS-P1A-007` — the restyle, from `docs/reference/redesign_20261008.html`: brand palette, icons,
       cards, closing band, in `styles.css`, dark mode kept, real mark kept, live text kept
 - [ ] `LWS-P1A-008` — self-hosted fonts; no visitor's IP reaches Google

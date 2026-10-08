@@ -17,8 +17,9 @@
   `https://github.com/kisame01/lumit_website`. Deployed and live.
 - `scripts/check_site.mjs` (**14,799**) passes on `main`: `6 pages | 68 internal links | 6 assets`,
   zero violations across B-001 to B-008.
-- **Branch protection on `main` is still off** (GitHub API, 2026-10-08). From LWS-P1A-006 it protects
-  the deploy path, not just the history — see Phase 1 in `ROADMAP.md`.
+- **Branch protection on `main` is on since 2026-10-08** — classic rule, nothing ticked: blocks force
+  pushes and deletion only; no pull request required. GitHub API: `protected: true`, no required
+  status checks. It protects the deploy path — cPanel's Update from Remote is fast-forward only.
 - **Roles changed on 2026-10-08:** planner/reviewer is **Claude Opus 5.5 High**, coder is **Cursor
   running Grok 4.7 High**. Grok 4.7 exists and has a High setting — confirmed on Cursor's own model
   page, because a past planner once invented a model version. `AGENTS.md` is updated.
@@ -71,7 +72,7 @@ Certificate: AutoSSL for the apex, `www` and eight service subdomains, to 17 Dec
 | task | what | state |
 |---|---|---|
 | `LWS-P1A-006` | `.cpanel.yml` + B-008 | **merged and deployed 2026-10-08** — `docs/review/review_20261008_lws_p1a_006_b008.md`. **B-008 cannot see files referenced from CSS** — review §5 |
-| `LWS-P1A-007` | the restyle | **not yet written** — the new planner writes it, from the decision record §2–§3 |
+| `LWS-P1A-007` | the restyle + B-009 + B-010 | **contract written 2026-10-08, prototyped and measured before issue** — `docs/context/cursor/grok/4_7/high/lws_p1a_007_contract.md`, with exact `lws_p1a_007_styles.css`, `lws_p1a_007_icons.svg` and `lws_p1a_007_pages.diff` beside it |
 | `LWS-P1A-008` | self-hosted fonts | after the restyle |
 
 ## The deployment lesson, kept because it is why Phase 4 exists
@@ -91,7 +92,6 @@ failure that git deployment would otherwise introduce.
 | 2 | **The closing-block em-dash on all six pages.** Adopted into the restyle by owner decision | `LWS-P1A-007` |
 | 3 | **A commented-out `<script>` or chrome tag fires B-007.** Known, accepted | nothing — delete commented markup |
 | 4 | **DMARC has no `rua=`** | owner, Zone Editor |
-| 5 | **Branch protection off** | owner, GitHub settings |
 
 ## Next
 
@@ -100,9 +100,11 @@ verified from outside.
 
 | # | what | who |
 |---|---|---|
-| 1 | **Branch protection on `main`** — block force pushes and deletions only. Now part of the deploy path | owner |
-| 2 | Write `LWS-P1A-007`, the restyle — and close the CSS `url()` gap in B-001/B-008 if it adds any `url()` | planner |
-| 3 | DMARC `rua=` edit | owner |
+| 1 | Hand `lws_p1a_007_contract.md` to Cursor Grok 4.7 High | owner |
+| 2 | Review LWS-P1A-007 — hashes, gate, ten mutations, 156-combination browser run, contrast | planner |
+| 3 | Commit, merge, push; Update from Remote → Deploy HEAD Commit; planner verifies from outside | owner, planner |
+| 4 | `LWS-P1A-008` — self-hosted fonts, and B-001/B-008 learn to read CSS `url()` | planner |
+| 5 | DMARC `rua=` edit | owner |
 
 ## Parked, deliberately
 
@@ -121,7 +123,9 @@ verified from outside.
 | B-006 | the responsive masthead toggle — LWS-P1A-003 | live |
 | B-007 | tag balance, and the reference-page collapse — LWS-P1A-004 | live |
 | **B-008** | **`.cpanel.yml` deploys exactly the site — LWS-P1A-006** | **live** — blind to CSS `url()`, review §5 |
-| B-009 | next free — the restyle's icon-sprite check is the likely taker | — |
+| B-009 | every `<use href>` names a `<symbol>` that exists — LWS-P1A-007 | contract issued |
+| B-010 | no inline `style` attribute on any page — LWS-P1A-007 | contract issued |
+| B-011 | next free — CSS `url()` reach for B-001/B-008 is the likely taker, LWS-P1A-008 | — |
 
 **Behaviour IDs are per repository.** `lumit_webapp` has its own `B-008`; it is unrelated.
 

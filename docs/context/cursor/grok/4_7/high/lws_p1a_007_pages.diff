@@ -1,0 +1,658 @@
+--- a/index.html
++++ b/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/" aria-current="page">Home</a>
+         <a href="/services/">Services</a>
+@@ -54,7 +54,7 @@
+ <section class="page is-on">
+ 
+   <div class="wrap hero">
+-    <p class="eyebrow">Cloud &amp; Data Transformation · South Africa</p>
++    <p class="eyebrow"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Cloud &amp; Data Transformation · South Africa</p>
+     <h1>Know what you have. Fix what matters. <em>Build only what you need.</em></h1>
+     <p class="lede">Lumit helps South African organisations understand, govern, modernise and optimise their technology estates, through independent assessment, hands-on engineering and right-sized technology.</p>
+     <div class="hero-actions">
+@@ -62,9 +62,9 @@
+       <a class="btn ghost" href="/services/">See the services</a>
+     </div>
+     <div class="claim">
+-      <div><span>Cloud</span>Architecture · Migration · Optimisation</div>
+-      <div><span>Data</span>Governance · Warehousing · Reporting</div>
+-      <div><span>Cost</span>Cloud Cost Management · FinOps</div>
++      <div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-cloud"/></svg></span><p><span>Cloud</span>Architecture · Migration · Optimisation</p></div>
++      <div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-db"/></svg></span><p><span>Data</span>Governance · Warehousing · Reporting</p></div>
++      <div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-coins"/></svg></span><p><span>Cost</span>Cloud Cost Management · FinOps</p></div>
+     </div>
+   </div>
+   <hr class="spectrum">
+@@ -72,16 +72,16 @@
+   <div class="wrap">
+     <section class="section">
+       <div class="annot">
+-        <div class="gut">01 — Position</div>
++        <div class="gut"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-compass"/></svg>01 — Position</div>
+         <div>
+           <div class="sec-head"><h2>Evidence before expansion</h2></div>
+           <p class="body">We do not open a relationship by selling a transformation programme. We inventory the estate, measure the baseline, rank the problems by value and urgency, and build a working proof where being wrong would be expensive.</p>
+           <p class="body"><strong>The first engagement stays small enough to approve without a board paper.</strong> The people who assess your environment are the same people who design it and build it, so you brief the person doing the work.</p>
+-          <div class="steps" style="margin-top:28px">
+-            <div class="step"><div class="n">01</div><h3>Inventory</h3><p>Establish what is actually there, and who owns it.</p></div>
+-            <div class="step"><div class="n">02</div><h3>Baseline</h3><p>Measure the technical and financial starting position.</p></div>
+-            <div class="step"><div class="n">03</div><h3>Prioritise</h3><p>Rank by value, effort and urgency.</p></div>
+-            <div class="step"><div class="n">04</div><h3>Prove</h3><p>Demonstrate the approach before committing to it.</p></div>
++          <div class="steps">
++            <div class="step"><div class="n">01</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-list"/></svg></span><h3>Inventory</h3><p>Establish what is actually there, and who owns it.</p></div>
++            <div class="step"><div class="n">02</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-gauge"/></svg></span><h3>Baseline</h3><p>Measure the technical and financial starting position.</p></div>
++            <div class="step"><div class="n">03</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-sort"/></svg></span><h3>Prioritise</h3><p>Rank by value, effort and urgency.</p></div>
++            <div class="step"><div class="n">04</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-check"/></svg></span><h3>Prove</h3><p>Demonstrate the approach before committing to it.</p></div>
+           </div>
+         </div>
+       </div>
+@@ -89,66 +89,72 @@
+ 
+     <section class="section">
+       <div class="annot">
+-        <div class="gut">02 — Method<br>Six options<br>per workload</div>
++        <div class="gut"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-layers"/></svg>02 — Method<br>Six options<br>per workload</div>
+         <div>
+           <div class="sec-head"><h2>Every workload gets assessed against six options</h2></div>
+-          <p class="body" style="margin-bottom:26px">Moving a server from a data centre to a cloud virtual machine changes where it runs. It does not change what it costs to operate, who patches it, or how it recovers. We put numbers on both sides and record the decision.</p>
+-          <div class="matrix-scroll">
++          <p class="body">Moving a server from a data centre to a cloud virtual machine changes where it runs. It does not change what it costs to operate, who patches it, or how it recovers. We put numbers on both sides and record the decision.</p>
++          <div class="matrix-scroll" tabindex="0" role="region" aria-label="Workload disposition matrix">
+             <table class="matrix">
+               <caption>Workload disposition matrix: the shape of every assessment we deliver</caption>
+               <thead>
+                 <tr><th scope="col">Option</th><th scope="col">What it means</th><th scope="col">What it changes</th><th scope="col">Effort</th></tr>
+               </thead>
+               <tbody>
+-                <tr><td class="opt">Retain</td><td>Leave it where it is, deliberately and on the record</td><td>Nothing, but the decision is now documented</td><td class="cost">None</td></tr>
+-                <tr><td class="opt">Retire</td><td>Switch it off; nobody has used it in months</td><td>Removes licence, support and attack surface</td><td class="cost">Low</td></tr>
+-                <tr><td class="opt">Rehost</td><td>Lift the server to a cloud virtual machine</td><td>Where it runs. Not what it costs to operate</td><td class="cost">Low</td></tr>
+-                <tr><td class="opt">Replatform</td><td>Move onto a managed service</td><td>Patching and recovery move to the provider</td><td class="cost">Medium</td></tr>
+-                <tr><td class="opt">Refactor</td><td>Rebuild the parts that hold everything back</td><td>Scaling behaviour and run cost</td><td class="cost">High</td></tr>
+-                <tr><td class="opt">Replace</td><td>Buy the capability instead of running it</td><td>Ownership of the whole problem</td><td class="cost">Varies</td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pause"/></svg>Retain</td><td>Leave it where it is, deliberately and on the record</td><td>Nothing, but the decision is now documented</td><td class="cost"><span class="eff eff-none">None</span></td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-power"/></svg>Retire</td><td>Switch it off; nobody has used it in months</td><td>Removes licence, support and attack surface</td><td class="cost"><span class="eff eff-low">Low</span></td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-server"/></svg>Rehost</td><td>Lift the server to a cloud virtual machine</td><td>Where it runs. Not what it costs to operate</td><td class="cost"><span class="eff eff-low">Low</span></td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-layers"/></svg>Replatform</td><td>Move onto a managed service</td><td>Patching and recovery move to the provider</td><td class="cost"><span class="eff eff-med">Medium</span></td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-code"/></svg>Refactor</td><td>Rebuild the parts that hold everything back</td><td>Scaling behaviour and run cost</td><td class="cost"><span class="eff eff-high">High</span></td></tr>
++                <tr><td class="opt"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-swap"/></svg>Replace</td><td>Buy the capability instead of running it</td><td>Ownership of the whole problem</td><td class="cost"><span class="eff eff-varies">Varies</span></td></tr>
+               </tbody>
+             </table>
+           </div>
+-          <p class="body" style="margin-top:18px;font-size:14.5px">A managed database service takes most of the operational burden off your hands, though not where you have version constraints, unsupported extensions, or consumption pricing that works against your volumes.</p>
++          <p class="aside"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-info"/></svg><span>A managed database service takes most of the operational burden off your hands, though not where you have version constraints, unsupported extensions, or consumption pricing that works against your volumes.</span></p>
+         </div>
+       </div>
+     </section>
+ 
+     <section class="section">
+       <div class="annot">
+-        <div class="gut">03 — Services<br>Six areas</div>
++        <div class="gut"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-flow"/></svg>03 — Services<br>Six areas</div>
+         <div>
+           <div class="sec-head">
+             <h2>What we do</h2>
+-            <a class="btn ghost" href="/services/" style="margin-left:auto">All services <span class="arw">→</span></a>
++            <a class="btn ghost" href="/services/">All services <span class="arw">→</span></a>
+           </div>
+           <div class="register">
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-cloud"/></svg></span>
+     <div class="idx">01</div>
+     <div><h3>Cloud Strategy, Architecture &amp; Migration</h3><div class="sub">Assess · Design · Migrate</div></div>
+     <p>Deciding what should move, how it should move, and whether moving it improves anything. Then building the foundation it lands on.</p>
+   </article>
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-flow"/></svg></span>
+     <div class="idx">02</div>
+     <div><h3>Data Architecture, Engineering &amp; Integration</h3><div class="sub">Pipelines · Integration · Platform</div></div>
+     <p>The connective work that decides whether everything above it succeeds. It is also the part that gets under-scoped.</p>
+   </article>
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-db"/></svg></span>
+     <div class="idx">03</div>
+     <div><h3>Data Warehousing, Reporting &amp; Governance</h3><div class="sub">Models · Definitions · Ownership</div></div>
+     <p>Reports disagree. Month-end takes three days of manual reconciliation. The usual instinct is to buy a better reporting tool, but the cause is almost always underneath it.</p>
+   </article>
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-coins"/></svg></span>
+     <div class="idx">04</div>
+     <div><h3>Cloud Cost Management &amp; Optimisation</h3><div class="sub">Visibility · Right-sizing · FinOps</div></div>
+     <p>Without visibility and active management, cloud spend grows faster than the value it delivers.</p>
+   </article>
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-server"/></svg></span>
+     <div class="idx">05</div>
+     <div><h3>Operations, DevOps &amp; Estate Assessment</h3><div class="sub">Orchestration · Automation · Register</div></div>
+     <p>Keeping what has been built running predictably, and being able to say quickly what the organisation actually owns.</p>
+   </article>
+   <article class="reg-row">
++    <span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-shield"/></svg></span>
+     <div class="idx">06</div>
+     <div><h3>AI Readiness &amp; Governed Delivery</h3><div class="sub">Register · Risk · Oversight</div></div>
+     <p>We do not sell AI as a product line. There are two practical questions: whether you are ready to put AI into production, and whether the software we build for you is safe when AI has helped build it.</p>
+@@ -159,14 +165,14 @@
+ 
+     <section class="section">
+       <div class="annot">
+-        <div class="gut">04 — Difference</div>
++        <div class="gut"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-target"/></svg>04 — Difference</div>
+         <div>
+           <div class="sec-head"><h2>How we're different</h2></div>
+           <div class="grid2">
+-            <div class="pnl"><div class="bar"></div><h3>Right-sized technology</h3><p>A scheduled overnight report and a platform serving hundreds of concurrent users are different problems and should not get the same answer. The workload decides, not the vendor logo.</p></div>
+-            <div class="pnl"><div class="bar"></div><h3>Vendor-independent, platform-capable</h3><p>Azure, AWS, Google Cloud, Fabric, Databricks and Power BI where their scale earns the money, and a mature open platform where it meets the same requirement, including when that means recommending less than you came to buy.</p></div>
+-            <div class="pnl"><div class="bar"></div><h3>Working proof, not only advice</h3><p>Every engagement leaves something you can open, run and hand to somebody else. A slide deck is not a deliverable.</p></div>
+-            <div class="pnl"><div class="bar"></div><h3>Knowledge transfer by design</h3><p>We are not trying to become permanent. Documentation, architecture decisions, runbooks and a technical walkthrough are part of the engagement, not a line item at the end.</p></div>
++            <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-scale"/></svg></span><div><h3>Right-sized technology</h3><p>A scheduled overnight report and a platform serving hundreds of concurrent users are different problems and should not get the same answer. The workload decides, not the vendor logo.</p></div></div>
++            <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-net"/></svg></span><div><h3>Vendor-independent, platform-capable</h3><p>Azure, AWS, Google Cloud, Fabric, Databricks and Power BI where their scale earns the money, and a mature open platform where it meets the same requirement, including when that means recommending less than you came to buy.</p></div></div>
++            <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-box"/></svg></span><div><h3>Working proof, not only advice</h3><p>Every engagement leaves something you can open, run and hand to somebody else. A slide deck is not a deliverable.</p></div></div>
++            <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-book"/></svg></span><div><h3>Knowledge transfer by design</h3><p>We are not trying to become permanent. Documentation, architecture decisions, runbooks and a technical walkthrough are part of the engagement, not a line item at the end.</p></div></div>
+           </div>
+         </div>
+       </div>
+@@ -174,11 +180,11 @@
+ 
+     <section class="section">
+       <div class="annot">
+-        <div class="gut">05 — Fit</div>
++        <div class="gut"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-check"/></svg>05 — Fit</div>
+         <div>
+           <div class="sec-head"><h2>Where we fit best</h2></div>
+           <p class="body">We work with private and public sector organisations of every size. <strong>Size is not the qualifier.</strong> What matters is the estate: hybrid or legacy systems still carrying real load, cloud and licence spend nobody can fully explain, a governance question that has reached the board, or a vendor proposal that should be challenged on technical and financial grounds before it is signed.</p>
+-          <blockquote class="pull" style="margin-top:32px">Move with purpose. Govern with confidence. Optimise for value.</blockquote>
++          <blockquote class="pull">Move with purpose. Govern with confidence. Optimise for value.</blockquote>
+         </div>
+       </div>
+     </section>
+@@ -189,15 +195,15 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ <footer>
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/services/index.html
++++ b/services/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/">Home</a>
+         <a href="/services/" aria-current="page">Services</a>
+@@ -62,15 +62,15 @@
+   <div class="wrap">
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">01 — Assess<br>Design<br>Migrate</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-cloud"/></svg></span>01 — Assess<br>Design<br>Migrate</div>
+       <div>
+         <div class="sec-head"><h2>Cloud Strategy, Architecture &amp; Migration</h2></div>
+         <p class="lede">Deciding what should move, how it should move, and whether moving it improves anything. Then building the foundation it lands on.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">You have been told to move to the cloud. Nobody has said which workloads should move, how they should move, or what gets better afterwards. Meanwhile the environment already running in Azure or AWS has grown without consistent identity, network, policy, tagging or logging standards, and nobody is confident it could be rebuilt if it had to be.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We assess each workload against six options and put numbers on both sides of every decision. We then design or repair the foundation those workloads land on: subscription and account structure, identity and privileged access, network topology, policy guardrails, logging and monitoring, secrets and key management, backup and recovery patterns, and a tagging standard that makes cost allocation possible once the invoices start arriving.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">You have been told to move to the cloud. Nobody has said which workloads should move, how they should move, or what gets better afterwards. Meanwhile the environment already running in Azure or AWS has grown without consistent identity, network, policy, tagging or logging standards, and nobody is confident it could be rebuilt if it had to be.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We assess each workload against six options and put numbers on both sides of every decision. We then design or repair the foundation those workloads land on: subscription and account structure, identity and privileged access, network topology, policy guardrails, logging and monitoring, secrets and key management, backup and recovery patterns, and a tagging standard that makes cost allocation possible once the invoices start arriving.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>A workload disposition matrix, with the reasoning recorded against each decision</li><li>Target-state architecture for the platform and its landing zone</li><li>A sequenced migration plan with dependencies, cutover approach and rollback positions</li><li>Infrastructure defined as code, with deployment pipelines and operational runbooks</li><li>An investment case a CFO can take to the board</li></ul>
+         
+       </div>
+@@ -78,15 +78,15 @@
+   </section>
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">02 — Pipelines<br>Integration<br>Platform</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-flow"/></svg></span>02 — Pipelines<br>Integration<br>Platform</div>
+       <div>
+         <div class="sec-head"><h2>Data Architecture, Engineering &amp; Integration</h2></div>
+         <p class="lede">The connective work that decides whether everything above it succeeds. It is also the part that gets under-scoped.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">Reporting and AI ambitions are usually blocked lower down than anyone admits. The data sits in an ERP with no API, a database nobody wants to touch, a nightly file drop that fails quietly, and four systems that each hold a different version of the same customer.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We map the dependencies before designing anything: what feeds what, on what schedule, through which credential, and what breaks when it fails. Then we build the connective layer: scheduled extracts, change data capture, secure file exchange, queues with retry behaviour, and APIs in front of systems that never had one. Monitoring tells you a load failed before a business user does.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">Reporting and AI ambitions are usually blocked lower down than anyone admits. The data sits in an ERP with no API, a database nobody wants to touch, a nightly file drop that fails quietly, and four systems that each hold a different version of the same customer.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We map the dependencies before designing anything: what feeds what, on what schedule, through which credential, and what breaks when it fails. Then we build the connective layer: scheduled extracts, change data capture, secure file exchange, queues with retry behaviour, and APIs in front of systems that never had one. Monitoring tells you a load failed before a business user does.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>A dependency and integration map of the current estate</li><li>Ingestion and transformation pipelines in version control, with automated tests</li><li>Data platform architecture sized to the actual workload</li><li>Monitoring, alerting and documented failure and recovery behaviour</li><li>A defined path to scale, and the measurable conditions that should trigger it</li></ul>
+         
+       </div>
+@@ -94,15 +94,15 @@
+   </section>
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">03 — Models<br>Definitions<br>Ownership</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-db"/></svg></span>03 — Models<br>Definitions<br>Ownership</div>
+       <div>
+         <div class="sec-head"><h2>Data Warehousing, Reporting &amp; Governance</h2></div>
+         <p class="lede">Reports disagree. Month-end takes three days of manual reconciliation. The usual instinct is to buy a better reporting tool, but the cause is almost always underneath it.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">Nobody can say who owns the definition of an active customer, and two reports give two answers to the same question.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We design and optimise warehouses, dimensional models, business rules and reporting layers so that a number has one definition and one place it comes from. Where a model is slow, we establish whether the cause is design, volume or infrastructure before anyone spends money on it. Governance goes in at the minimum that makes data trustworthy: domains and owners, a business glossary, quality rules that run on their own, lineage, access classification and POPIA-aligned handling. The rest waits until the first part is being used.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">Nobody can say who owns the definition of an active customer, and two reports give two answers to the same question.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We design and optimise warehouses, dimensional models, business rules and reporting layers so that a number has one definition and one place it comes from. Where a model is slow, we establish whether the cause is design, volume or infrastructure before anyone spends money on it. Governance goes in at the minimum that makes data trustworthy: domains and owners, a business glossary, quality rules that run on their own, lineage, access classification and POPIA-aligned handling. The rest waits until the first part is being used.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>Consistent figures across reports, with a documented definition for every measure that matters</li><li>Named owners for the data that matters</li><li>Automated data quality rules that catch failures in the pipeline, not in a board pack</li><li>A defensible position on where personal data lives and who can reach it</li><li>Faster processing, with a stated reason for the improvement</li></ul>
+         
+       </div>
+@@ -110,15 +110,15 @@
+   </section>
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">04 — Visibility<br>Right-sizing<br>FinOps</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-coins"/></svg></span>04 — Visibility<br>Right-sizing<br>FinOps</div>
+       <div>
+         <div class="sec-head"><h2>Cloud Cost Management &amp; Optimisation</h2></div>
+         <p class="lede">Without visibility and active management, cloud spend grows faster than the value it delivers.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">The invoice arrives and nobody can explain it by workload, environment or department. Underused resources keep running because nobody owns them.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We establish visibility of cloud expenditure across subscriptions, accounts, workloads, environments, departments and services. We identify over-provisioned compute and storage, review consumption patterns to remove waste, and introduce budgets, tagging, ownership models and forecasting. Then we help technology and finance teams work together around cloud economics rather than around a spreadsheet.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">The invoice arrives and nobody can explain it by workload, environment or department. Underused resources keep running because nobody owns them.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We establish visibility of cloud expenditure across subscriptions, accounts, workloads, environments, departments and services. We identify over-provisioned compute and storage, review consumption patterns to remove waste, and introduce budgets, tagging, ownership models and forecasting. Then we help technology and finance teams work together around cloud economics rather than around a spreadsheet.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>Cost visibility broken down by workload, environment, department and service</li><li>A ranked optimisation backlog with effort and expected saving stated per item</li><li>Budgets, tagging standards and cost ownership that survive the engagement</li><li>Forecasting based on usage trends and workload patterns</li><li>A FinOps operating rhythm shared between technology and finance</li></ul>
+         
+       </div>
+@@ -126,15 +126,15 @@
+   </section>
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">05 — Orchestration<br>Automation<br>Register</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-server"/></svg></span>05 — Orchestration<br>Automation<br>Register</div>
+       <div>
+         <div class="sec-head"><h2>Operations, DevOps &amp; Estate Assessment</h2></div>
+         <p class="lede">Keeping what has been built running predictably, and being able to say quickly what the organisation actually owns.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">Jobs fail at two in the morning and someone finds out at nine. Deployments are manual, undocumented, and done by one person who is now on leave. Most organisations also cannot quickly answer what they own, what is unsupported, what is idle, where sensitive data sits, and whether the backups have ever actually been restored.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We improve scheduling, dependency management, monitoring, automation and deployment practice. Orchestration runs on Apache Airflow or the scheduler your platform already supports. Environments are defined as code in Terraform or Bicep, so they can be rebuilt from a repository rather than reconstructed from memory, and pipelines run through GitHub Actions. Alerts go to a named person holding a runbook. Alongside that we run a structured assessment of the application, cloud, data, integration, infrastructure, security, cost and governance landscape, by people with no product to sell you at the end of it.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">Jobs fail at two in the morning and someone finds out at nine. Deployments are manual, undocumented, and done by one person who is now on leave. Most organisations also cannot quickly answer what they own, what is unsupported, what is idle, where sensitive data sits, and whether the backups have ever actually been restored.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We improve scheduling, dependency management, monitoring, automation and deployment practice. Orchestration runs on Apache Airflow or the scheduler your platform already supports. Environments are defined as code in Terraform or Bicep, so they can be rebuilt from a repository rather than reconstructed from memory, and pipelines run through GitHub Actions. Alerts go to a named person holding a runbook. Alongside that we run a structured assessment of the application, cloud, data, integration, infrastructure, security, cost and governance landscape, by people with no product to sell you at the end of it.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>A technology estate register with named owners and business criticality</li><li>Current-state architecture and dependency map</li><li>A risk and remediation register, ranked by cost, risk and criticality</li><li>Recovery findings that separate what has been tested from what has been assumed</li><li>A quick-win plan, a twelve-month roadmap and an indicative investment case</li></ul>
+         
+       </div>
+@@ -142,17 +142,17 @@
+   </section>
+   <section class="section">
+     <div class="annot">
+-      <div class="gut">06 — Register<br>Risk<br>Oversight</div>
++      <div class="gut"><span class="tile tile-grad"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-shield"/></svg></span>06 — Register<br>Risk<br>Oversight</div>
+       <div>
+         <div class="sec-head"><h2>AI Readiness &amp; Governed Delivery</h2></div>
+         <p class="lede">We do not sell AI as a product line. There are two practical questions: whether you are ready to put AI into production, and whether the software we build for you is safe when AI has helped build it.</p>
+-        <h3 style="margin-top:26px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">The problem</h3>
+-        <p class="body" style="margin-top:8px">Employees and development teams are already using AI. Management has no inventory of where, no policy, no risk classification, and no route from an experiment to something that can be operated in production. The data underneath the ambition is usually not ready either.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What we do</h3>
+-        <p class="body" style="margin-top:8px">We build a use-case register, assess data readiness honestly, classify each use by risk, define where human oversight is required, and set out what has to be true before a use case goes into production. Governance material draws on POPIA-aligned data handling, recognised AI risk-management frameworks and applicable sector requirements.</p>
+-        <h3 style="margin-top:22px;font-size:15px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500">What you get</h3>
++        <h3 class="label-h">The problem</h3>
++        <p class="body">Employees and development teams are already using AI. Management has no inventory of where, no policy, no risk classification, and no route from an experiment to something that can be operated in production. The data underneath the ambition is usually not ready either.</p>
++        <h3 class="label-h">What we do</h3>
++        <p class="body">We build a use-case register, assess data readiness honestly, classify each use by risk, define where human oversight is required, and set out what has to be true before a use case goes into production. Governance material draws on POPIA-aligned data handling, recognised AI risk-management frameworks and applicable sector requirements.</p>
++        <h3 class="label-h">What you get</h3>
+         <ul class="deliv"><li>An AI use-case register with risk classification per use</li><li>An honest data-readiness assessment against each intended use</li><li>Defined human oversight points and production entry criteria</li><li>Governance material aligned to POPIA and recognised AI risk frameworks</li><li>A delivery standard for AI-assisted engineering your security team can audit</li></ul>
+-        <p class="body" style="margin-top:16px;font-size:14px;color:var(--muted)">This is technical and governance consulting, not legal advice.</p>
++        <p class="fineprint">This is technical and governance consulting, not legal advice.</p>
+       </div>
+     </div>
+   </section></div>
+@@ -162,15 +162,15 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ <footer>
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/how-we-work/index.html
++++ b/how-we-work/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/">Home</a>
+         <a href="/services/">Services</a>
+@@ -62,10 +62,10 @@
+   <div class="wrap">
+     <section class="section">
+       <div class="steps">
+-        <div class="step"><div class="n">01</div><h3>Assess</h3><p>We inventory the estate and measure the baseline: workloads, dependencies, data flows, cloud usage, spend patterns, constraints and priorities. <strong>Nothing is recommended before this is done.</strong></p></div>
+-        <div class="step"><div class="n">02</div><h3>Architect</h3><p>We define the target state, technology patterns, migration approach, governance requirements and cost model, and record why each decision was made so it can be revisited on its merits.</p></div>
+-        <div class="step"><div class="n">03</div><h3>Implement</h3><p>We build in controlled increments: migration, engineering, integration, reporting, automation and platform changes, each with a defined acceptance position.</p></div>
+-        <div class="step"><div class="n">04</div><h3>Optimise</h3><p>We measure performance, cost, reliability and adoption against the original baseline, then improve what the measurements point to.</p></div>
++        <div class="step"><div class="n">01</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-list"/></svg></span><h3>Assess</h3><p>We inventory the estate and measure the baseline: workloads, dependencies, data flows, cloud usage, spend patterns, constraints and priorities. <strong>Nothing is recommended before this is done.</strong></p></div>
++        <div class="step"><div class="n">02</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-layers"/></svg></span><h3>Architect</h3><p>We define the target state, technology patterns, migration approach, governance requirements and cost model, and record why each decision was made so it can be revisited on its merits.</p></div>
++        <div class="step"><div class="n">03</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-code"/></svg></span><h3>Implement</h3><p>We build in controlled increments: migration, engineering, integration, reporting, automation and platform changes, each with a defined acceptance position.</p></div>
++        <div class="step"><div class="n">04</div><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-gauge"/></svg></span><h3>Optimise</h3><p>We measure performance, cost, reliability and adoption against the original baseline, then improve what the measurements point to.</p></div>
+       </div>
+     </section>
+ 
+@@ -93,9 +93,10 @@
+           <div class="sec-head"><h2>How we use AI, and what that means for you</h2></div>
+           <p class="body">AI can compress the time between a requirement and working software. Left uncontrolled, it also introduces security defects, licence exposure, and code nobody understands well enough to support.</p>
+           <p class="body">We use AI to accelerate discovery, prototyping, testing and documentation, and engineers stay accountable for what reaches production. Delivery is standardised on GitHub, which puts repository permissions, branch protection, required reviews and the coding agents themselves under one set of controls your security team can audit.</p>
+-          <div class="note" style="margin-top:22px">
+-            <strong>The controls, stated plainly</strong>
+-            <p>Approved tools only. No confidential data submitted to unapproved services. Human review on every change. Dependency and secret scanning. Automated tests. A production release that a person approves.</p>
++          <div class="note">
++            <svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-shield"/></svg>
++            <div><strong>The controls, stated plainly</strong>
++            <p>Approved tools only. No confidential data submitted to unapproved services. Human review on every change. Dependency and secret scanning. Automated tests. A production release that a person approves.</p></div>
+           </div>
+         </div>
+       </div>
+@@ -107,15 +108,15 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ <footer>
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/engagements/index.html
++++ b/engagements/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/">Home</a>
+         <a href="/services/">Services</a>
+@@ -64,17 +64,17 @@
+       <div class="sec-head"><span class="eyebrow">Fixed scope</span><h2>Start here</h2></div>
+       <div class="eng">
+         <div class="eng-row">
+-          <h3>Technology Estate Assessment</h3>
++          <h3><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-list"/></svg>Technology Estate Assessment</h3>
+           <p>An independent assessment of what you own, what it costs, what is at risk and what should change first. Delivered as a register, a ranked risk view, a roadmap and an investment case.</p>
+           <div class="meta">2–6 weeks</div>
+         </div>
+         <div class="eng-row">
+-          <h3>Cloud Cost Assessment</h3>
++          <h3><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-coins"/></svg>Cloud Cost Assessment</h3>
+           <p>A review of cloud invoices, allocation and resource usage against an agreed baseline, producing a ranked optimisation backlog with the effort and expected saving stated for each item.</p>
+           <div class="meta">2–3 weeks</div>
+         </div>
+         <div class="eng-row">
+-          <h3>Data Foundation Engagement</h3>
++          <h3><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-db"/></svg>Data Foundation Engagement</h3>
+           <p>Ownership, definitions, quality rules and a working reporting model for one business domain, built deliberately as the pattern the next domain follows.</p>
+           <div class="meta">4–8 weeks</div>
+         </div>
+@@ -99,15 +99,15 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ <footer>
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/about/index.html
++++ b/about/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/">Home</a>
+         <a href="/services/">Services</a>
+@@ -65,7 +65,7 @@
+         <div class="gut">Purpose</div>
+         <div>
+           <p class="lede">To make cloud and data technology simpler, more scalable, cost-efficient and valuable, from assessment and architecture through migration, modernisation, governance, cost optimisation and ongoing improvement.</p>
+-          <p class="body" style="margin-top:22px">Senior engineers stay on the engagement from first assessment to handover, and the scope stays the size the evidence supports. We are built to work alongside internal technology teams, business stakeholders and delivery partners.</p>
++          <p class="body">Senior engineers stay on the engagement from first assessment to handover, and the scope stays the size the evidence supports. We are built to work alongside internal technology teams, business stakeholders and delivery partners.</p>
+         </div>
+       </div>
+     </section>
+@@ -73,10 +73,10 @@
+     <section class="section">
+       <div class="sec-head"><span class="eyebrow">Capability</span><h2>What we bring</h2></div>
+       <div class="grid2">
+-        <div class="pnl"><div class="bar"></div><h3>Cloud-first thinking</h3><p>Architecture and migration guidance designed around security, scalability, resilience and cost.</p></div>
+-        <div class="pnl"><div class="bar"></div><h3>Data-driven delivery</h3><p>Data architecture, governance, warehouse and reporting capabilities that create trusted information.</p></div>
+-        <div class="pnl"><div class="bar"></div><h3>Cost-conscious cloud</h3><p>Cloud spend visibility, resource optimisation, right-sizing and cost-management practices that improve cloud value.</p></div>
+-        <div class="pnl"><div class="bar"></div><h3>Engineering discipline</h3><p>Automation, orchestration and DevOps practices that improve repeatability and operational efficiency.</p></div>
++        <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-cloud"/></svg></span><div><h3>Cloud-first thinking</h3><p>Architecture and migration guidance designed around security, scalability, resilience and cost.</p></div></div>
++        <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-db"/></svg></span><div><h3>Data-driven delivery</h3><p>Data architecture, governance, warehouse and reporting capabilities that create trusted information.</p></div></div>
++        <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-coins"/></svg></span><div><h3>Cost-conscious cloud</h3><p>Cloud spend visibility, resource optimisation, right-sizing and cost-management practices that improve cloud value.</p></div></div>
++        <div class="pnl"><span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-flow"/></svg></span><div><h3>Engineering discipline</h3><p>Automation, orchestration and DevOps practices that improve repeatability and operational efficiency.</p></div></div>
+       </div>
+     </section>
+ 
+@@ -100,15 +100,15 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ <footer>
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/contact/index.html
++++ b/contact/index.html
+@@ -16,7 +16,7 @@
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300..800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+-<link rel="stylesheet" href="/styles.css?v=2">
++<link rel="stylesheet" href="/styles.css?v=3">
+ </head>
+ <body>
+ <header class="masthead">
+@@ -25,7 +25,7 @@
+       <img src="/assets/lumit-mark.svg?v=2" alt="" width="34" height="25" decoding="async">
+       <span class="brand-name">Lumit</span>
+     </a>
+-    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
++    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-menu"/></svg>Menu</button>
+     <nav class="nav" id="primary-nav" aria-label="Primary">
+         <a href="/">Home</a>
+         <a href="/services/">Services</a>
+@@ -63,19 +63,22 @@
+     <section class="section">
+       <div class="contact-grid">
+         <div class="cbox">
++          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-mail"/></svg></span>
+           <h3>Talk to us directly</h3>
+           <div class="cline"><span class="k">Enquiries</span><span class="v"><a href="mailto:enquiries@lumittechnology.com">enquiries@lumittechnology.com</a></span></div>
+           <div class="cline"><span class="k">Based in</span><span class="v">Johannesburg, South Africa</span></div>
+           <div class="cline"><span class="k">Serving</span><span class="v">South Africa, remote and on-site</span></div>
+         </div>
+         <div class="cbox">
++          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-compass"/></svg></span>
+           <h3>Book a landscape session</h3>
+-          <p class="body" style="margin-top:10px;font-size:15px">Send us a line with your industry and roughly what your environment looks like. We reply with two or three times that suit, and a short note on what we would want to see first.</p>
+-          <p style="margin-top:20px"><a class="btn" href="mailto:enquiries@lumittechnology.com?subject=Landscape%20session">Email to arrange a session <span class="arw">→</span></a></p>
++          <p class="body">Send us a line with your industry and roughly what your environment looks like. We reply with two or three times that suit, and a short note on what we would want to see first.</p>
++          <p class="cbox-act"><a class="btn" href="mailto:enquiries@lumittechnology.com?subject=Landscape%20session">Email to arrange a session <span class="arw">→</span></a></p>
+         </div>
+         <div class="cbox">
++          <span class="tile"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-list"/></svg></span>
+           <h3>What happens next</h3>
+-          <ul class="deliv" style="margin-top:10px">
++          <ul class="deliv">
+             <li>We talk for thirty minutes about the estate as it is</li>
+             <li>You get a written view of what we would assess first</li>
+             <li>If it is worth doing, we scope a fixed assessment</li>
+@@ -83,9 +86,10 @@
+           </ul>
+         </div>
+       </div>
+-      <div class="note" style="margin-top:34px">
+-        <strong>Nothing on this page is stored by us</strong>
+-        <p>This site runs no tracking, sets no cookies requiring consent, and keeps no database of visitors. Enquiries reach us by email, and nowhere else.</p>
++      <div class="note">
++        <svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-shield"/></svg>
++        <div><strong>Nothing on this page is stored by us</strong>
++        <p>This site runs no tracking, sets no cookies requiring consent, and keeps no database of visitors. Enquiries reach us by email, and nowhere else.</p></div>
+       </div>
+     </section>
+   </div>
+@@ -97,8 +101,8 @@
+   <div class="wrap">
+     <p class="eyebrow">Let's build what's next</p>
+     <h2>Cloud that works. Data you can trust. Costs you can control.</h2>
+-    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment — we can turn the challenge into a practical roadmap and delivery plan.</p>
+-    <p style="margin-top:28px"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
++    <p>Whether you are preparing for a cloud migration, modernising your data estate, strengthening governance or looking for better performance from your existing environment, we can turn the challenge into a practical roadmap and delivery plan.</p>
++    <p class="closing-act"><a class="btn ghost" href="/contact/">Book a landscape session <span class="arw">→</span></a></p>
+   </div>
+ </section>
+ 
+@@ -106,7 +110,7 @@
+   <div class="wrap">
+     <span class="mono">Lumit Cloud Technology Consulting</span>
+     <span class="mono">lumittechnology.com</span>
+-    <span class="sp mono">Johannesburg · South Africa</span>
++    <span class="sp mono"><svg class="ico" aria-hidden="true" focusable="false"><use href="/assets/icons.svg?v=1#i-pin"/></svg>Johannesburg · South Africa</span>
+   </div>
+ </footer>
+ </body>
+--- a/.cpanel.yml
++++ b/.cpanel.yml
+@@ -9,6 +9,7 @@
+     - /bin/cp robots.txt $DEPLOYPATH/robots.txt
+     - /bin/cp sitemap.xml $DEPLOYPATH/sitemap.xml
+     - /bin/cp assets/lumit-mark.svg $DEPLOYPATH/assets/lumit-mark.svg
++    - /bin/cp assets/icons.svg $DEPLOYPATH/assets/icons.svg
+     - /bin/cp about/index.html $DEPLOYPATH/about/index.html
+     - /bin/cp contact/index.html $DEPLOYPATH/contact/index.html
+     - /bin/cp engagements/index.html $DEPLOYPATH/engagements/index.html
